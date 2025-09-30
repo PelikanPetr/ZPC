@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ZPC 2025</title>
+  <style>
+    /* Základní reset */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: Arial, sans-serif;
+    }
+
+    body {
+      background: linear-gradient(to bottom, #0a0f2c, #0047ab);
+      color: white;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* Horní lišta */
+    header {
+      background: #1a1040;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 15px 30px;
+      font-size: 18px;
+    }
+
+    header .logo {
+      font-weight: bold;
+      color: #ff4669;
+    }
+
+    header nav a {
+      color: white;
+      text-decoration: none;
+      margin-left: 20px;
+      transition: color 0.3s ease;
+    }
+
+    header nav a:hover {
+      color: #ff4669;
+    }
+
+    /* Centrální obsah */
+    main {
+      flex: 1;
+      display: flex;
+      flex-direction: column; /* <-- karty pod sebou */
+      justify-content: flex-start;
+      align-items: center;
+      padding: 40px 20px;
+      gap: 30px; /* mezera mezi kartami */
+    }
+
+    .card {
+  position: relative;
+  width: 100%;
+  max-width: 1500px;  /* Maximální šířka obsahu na stránce */
+  padding: 20px;        /* Vnitřní okraj, aby text nebyl nalepený na kraji */
+  overflow: auto;       /* Důležité, aby správně obalil plovoucí obrázek */
+  color: #dddddd;       /* Světlejší barva pro běžný text, aby byl čitelný */
+}
+
+/* Hover efekt už není potřeba, když je karta neviditelná, proto ho vypneme */
+.card:hover {
+  transform: none;
+  box-shadow: none;
+}
+
+.card h2 {
+  color: white;           /* Barva hlavního nadpisu */
+  text-align: center;     /* Nadpis bude vycentrovaný */
+  margin-bottom: 30px;
+  font-size: 30px;    /* Větší mezera pod nadpisem */
+}
+
+.card p {
+  text-align: left;
+  line-height: 1.6;
+  font-size: 18px;    /* <-- PŘIDÁNO: Zvětší písmo v odstavcích */
+}
+
+/* Tento styl už pravděpodobně nepotřebuješ, ale nechávám ho tu pro jistotu */
+.card a {
+  display: inline-block;
+  margin-top: 10px;
+  color: #ff4669;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+.card a:hover {
+  text-decoration: underline;
+}
+
+    .profilovy-obrazek {
+  float: right;
+  margin-left: 30px;
+  margin-bottom: 15px;
+  width: 420px;        /* ZVĚTŠENO: Tuto hodnotu si můžeš libovolně měnit */
+  border-radius: 0;    /* ZRUŠENO ZAKULACENÍ: Toto zajistí ostré rohy */
+}
+.card-close-button {
+  position: absolute;      /* Umožní pozicování uvnitř .card kontejneru */
+  top: 0px;               /* Vzdálenost od horního okraje (můžeš si upravit) */
+  right: 0px;             /* Vzdálenost od pravého okraje (můžeš si upravit) */
+  
+  color: #ff4669;          /* Barva křížku */
+  font-size: 40px;         /* <-- VĚTŠÍ: Změněno z 32px na 40px */
+  font-weight: bold;       /* Tučnější */
+  text-decoration: none;   /* <-- BEZ ČÁRY: Odstraní podtržení odkazu */
+  line-height: 1;          /* Zajistí správnou velikost */
+  z-index: 10;             /* Aby byl křížek nad ostatním obsahem */
+  transition: color 0.2s ease, transform 0.2s ease; /* Plynulý přechod */
+}
+
+.card-close-button:hover {
+  color: white;                   /* Změní barvu při najetí myši */
+  transform: scale(1.1);          /* Lehce zvětší křížek při najetí */
+}
+    /* Spodní lišta */
+    footer {
+      text-align: center;
+      padding: 10px;
+      font-size: 14px;
+      background: #1a1040;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="logo">⚙ ZPC 2025</div>
+    <nav>
+      <a href="O-mne.html">O mně</a>
+      <a href="Semestrální projekt.html">Semestrální projekt</a>
+        </nav>
+  </header>
+
+  <main>
+    <div class="card">
+       <a href="index.html" class="card-close-button">&times;</a> 
+     <img src="Profil.png" alt="Profilový obrázek" class="profilovy-obrazek">
+<h2>O mně</h2>
+<p>
+    Jmenuji se Petr Pelikán a jako student oboru Konstrukční inženýrství se s nadšením nořím do světa, kde se digitální modely mění v reálné součástky a stroje. Práce s 3D tiskárnami a laserovými řezačkami je pro mě skvělá příležitost, jak si osahat technologii, která skutečně formuje budoucnost. Škola nám poskytuje skvělé zázemí a zároveň nás vede k přemýšlení nad efektivitou a hodnotou materiálu. Člověk si tak dvakrát rozmyslí, jak využije každý gram filamentu.
+</p>
+<p>
+    I to je jeden z důvodů, proč se soustředím na projekty s větším přesahem – aktuálně mě fascinuje například magnetická spektroskopie a její potenciál při hledání nových léčiv a možnosti zlepšení našeho světa. To je přesně ten typ konstruování, kde cítím, že má moje práce skutečný smysl a naplňuje mě. Beru tento projekt jako zosobnění mého odhodlání. Ukazuje, že když se nadšení pro věc spojí s intenzivním samostudiem, výsledkem může být prototyp, který při finální prezentaci úspěšně obhájí svou vizi.
+</p> 
+      
+    
+    </div>
+  </main>
+
+
+</body>
+</html>
