@@ -59,45 +59,115 @@
     }
 
     .card {
-      background: rgba(255, 255, 255, 0.8);
-      border: 1px solid rgba(255, 70, 105, 0.4);
-      border-radius: 12px;
-      padding: 30px 40px;
-      width: 100%;
-      max-width: 1000px;
-      text-align: center;
-      box-shadow: 0 0 15px rgba(255, 70, 105, 0.4);
-      transition: transform 0.3s ease, box-shadow 0.3s ease;
-      color:#0a0f2c;
-    }
+  position: relative;
+  width: 100%;
+  max-width: 1000px;  /* Maximální šířka obsahu na stránce */
+  padding: 20px;        /* Vnitřní okraj, aby text nebyl nalepený na kraji */
+  overflow: auto;       /* Důležité, aby správně obalil plovoucí obrázek */
+  color: #dddddd;       /* Světlejší barva pro běžný text, aby byl čitelný */
+}
 
-    /* Hover efekt pro zvýraznění */
-    .card:hover {
-      transform: translateY(-5px);
-      box-shadow: 0 0 20px rgba(255, 70, 105, 0.7);
-    }
+/* Hover efekt už není potřeba, když je karta neviditelná, proto ho vypneme */
+.card:hover {
+  transform: none;
+  box-shadow: none;
+}
 
-    .card h2 {
-      margin-bottom: 10px;
-    }
+/* --- VYLEPŠENÍ VZHLEDU TEXTU --- */
 
-    .card p {
-      margin: 5px 0;
-      color: #ddd;
-    }
+/* Hlavní nadpis projektu */
+.card h1 {
+  color: white;
+  text-align: center;
+  font-size: 38px;
+  font-weight: 900; /* Extra tučné písmo */
+  margin-bottom: 10px;
+  letter-spacing: 1px; /* Lehké mezery mezi písmeny pro lepší vzhled */
+}
 
-    .card a {
-      display: inline-block;
-      margin-top: 10px;
-      color: #ff4669;
-      text-decoration: none;
-      font-weight: bold;
-    }
+/* Nadpisy sekcí (Motivace, Cíle, ...) */
+.card h2 {
+  color: white;
+  text-align: center;
+  font-size: 28px;
+  font-weight: 700; /* Tučné písmo */
+  margin-top: 50px;    /* Větší mezera NAD nadpisem pro jasné oddělení sekcí */
+  margin-bottom: 20px;
+  border-bottom: 2px solid #ff4669; /* Stylové podtržení místo staré čáry */
+  padding-bottom: 10px; /* Mezera mezi textem a podtržením */
+}
 
-    .card a:hover {
-      text-decoration: underline;
-    }
+/* Podnadpisy (Dílčí cíle) */
+.card h3 {
+    color: #dddddd;
+    font-size: 20px;
+    font-weight: 700;
+    margin-top: 30px;
+    margin-bottom: 15px;
+}
 
+/* Běžný text v odstavcích */
+.card p {
+  text-align: left;
+  line-height: 1.7;   /* Zvětšené řádkování pro mnohem lepší čitelnost */
+  font-size: 18px;
+  color: #c5c5c5;     /* Lehce tlumená bílá, aby text "nekřičel" */
+}
+
+/* Stylování seznamů (odrážky) */
+.card ul {
+    list-style: none; /* Odstraní výchozí odrážky */
+    padding-left: 20px;
+}
+
+.card li {
+    padding-left: 25px;
+    position: relative;
+    margin-bottom: 10px;
+    font-size: 18px;
+    color: #c5c5c5;
+}
+
+/* Vytvoření vlastní, barevné odrážky */
+.card li::before {
+    content: '■'; /* Můžeš zkusit i jiné symboly, např. '●' nebo '✔' */
+    position: absolute;
+    left: 0;
+    top: 0;
+    color: #ff4669; /* Barva odrážky, aby ladila s webem */
+    font-size: 14px;
+}
+
+/* Skryjeme původní čáru <hr>, protože H2 teď mají hezčí podtržení */
+.card hr {
+    display: none;
+}
+
+    .Visual {
+  float: right;
+  margin-left: 30px;
+  margin-bottom: 15px;
+  width: 1000px;        /* ZVĚTŠENO: Tuto hodnotu si můžeš libovolně měnit */
+  border-radius: 0;    /* ZRUŠENO ZAKULACENÍ: Toto zajistí ostré rohy */
+}
+.card-close-button {
+  position: absolute;      /* Umožní pozicování uvnitř .card kontejneru */
+  top: 0px;               /* Vzdálenost od horního okraje (můžeš si upravit) */
+  right: 0px;             /* Vzdálenost od pravého okraje (můžeš si upravit) */
+  
+  color: #ff4669;          /* Barva křížku */
+  font-size: 40px;         /* <-- VĚTŠÍ: Změněno z 32px na 40px */
+  font-weight: bold;       /* Tučnější */
+  text-decoration: none;   /* <-- BEZ ČÁRY: Odstraní podtržení odkazu */
+  line-height: 1;          /* Zajistí správnou velikost */
+  z-index: 10;             /* Aby byl křížek nad ostatním obsahem */
+  transition: color 0.2s ease, transform 0.2s ease; /* Plynulý přechod */
+}
+
+.card-close-button:hover {
+  color: white;                   /* Změní barvu při najetí myši */
+  transform: scale(1.1);          /* Lehce zvětší křížek při najetí */
+}
     /* Spodní lišta */
     footer {
       text-align: center;
@@ -113,18 +183,38 @@
     <nav>
       <a href="O-mne.html">O mně</a>
       <a href="Semestrální projekt.html">Semestrální projekt</a>
-      </nav>
+        </nav>
   </header>
 
-  <main>
+   <main>
     <div class="card">
-      <h2>Úkol č. 1</h2>
-      <p>Ahoj takle to funguje</p>
-    <a href="index.html">Zpět</a>
+       <a href="index.html" class="card-close-button">&times;</a> 
+     
+  
+      <h1>Tvorba Webového Portfolia</h1>
 
-    </div>
-  </main>
+        <section>
+            <h2>Cíl a shrnutí</h2>
+            <p>V rámci tohoto úvodního projektu bylo vytvořeno vlastní webové portfolio. Hlavním smyslem bylo praktické osvojení klíčových principů webového vývoje a celého procesu online publikování. Web zároveň posloužil jako přehledná dokumentace práce na jednotlivých úkolech a finálním projektu.</p>
+        </section>
 
- 
+        <section>
+            <h2>Struktura webu</h2>
+            <p>Struktura webu byla rozdělena do několika logických částí:</p>
+            <ul>
+                <li><strong>Domovská stránka:</strong> Zde byl poskytnut souhrnný pohled na portfolio.</li>
+                <li><strong>O mně:</strong> V této sekci byla stručně představena osoba autora a jeho motivace.</li>
+                <li><strong>Projekty a úkoly:</strong> Byly zde zaznamenány detailní popisy použitých metod, pracovních postupů a dosažených výsledků.</li>
+                <li><strong>Závěrečný projekt:</strong> Byl vytvořen speciální příspěvek, který rekapituloval kompletní proces tvorby, nejdůležitější zjištění a finální řešení.</li>
+            </ul>
+        </section>
+
+        <section>
+            <h2>Použité technologie a přínos</h2>
+            <p>Při tvorbě byly využívány standardní vývojářské nástroje. Kód byl psán v editoru Visual Studio Code a pro správu souborů a závislostí byl použit příkazový řádek. Pro správu verzí a následné zveřejnění webu byla využita platforma GitHub.</p>
+            <p>Tímto projektem byl získán cenný základ a došlo k seznámení s pracovními postupy, na které bylo možné navázat v budoucích zadáních.</p>
+           <img src="Visual.png" alt="Visual" class="Visual">
+          </section>
+    </main> 
 </body>
 </html>
