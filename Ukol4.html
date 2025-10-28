@@ -250,68 +250,73 @@
   <main>
     <div class="card">
       <a href="index.html" class="card-close-button">&times;</a> 
-    
-      <h1>🚀 Úkol 2: Lasserové řezání</h1>
+       
+      <h1>🔬 Úkol 4: 3D Skenování a Metrologická Analýza</h1>
 
-      <p>Pro druhý projekt jsem si stanovil cíl, který byl stejně tak technickou výzvou jako osobní záležitostí: přetavit svou fascinaci vesmírem a raketovou technikou v hmatatelný 3D model. Zadání bylo jasné – vytvořit komplexní objekt výhradně pomocí 2D řezání, který by mohl sloužit jako designový kousek na poličce.</p>
+      <p>Cílem tohoto projektu bylo kompletní zvládnutí procesu 3D skenování: od přípravy dílu, přes samotnou akvizici dat, až po finální zpracování sítě a metrologickou analýzu v profesionálním softwaru.</p>
+      <p>Jako skenovací objekt byl zvolen komplexní, geometricky složitý díl – pravděpodobně kryt pro větší strojní součást, obsahující řadu otvorů a hlubokých záhybů.</p>
 
       <section class="project-section align-left">
         <div class="text-block">
-          <h2>Fáze 1: Digitální Rýsovací Prkno</h2>
-          <p>Celý projekt se zrodil v digitálním prostředí programu AutoCAD. Tato fáze se ukázala být jednou z nejnáročnějších. Nešlo jen o to "něco nakreslit"; bylo nutné navrhnout od nuly kompletní 3D strukturu, rozebrat ji v hlavě na desítky 2D dílů, a zajistit, aby po sestavení vše dokonale lícovalo.</p>
-          <p>Klíčovým konstrukčním prvkem byla technika "press-fit". To znamenalo, že celý model musel držet pohromadě bez jediného kousku lepidla, pouze silou tření a přesností zámků (zářezů). Každý prstenec tvořící trup, každý stabilizátor i každý díl přistávacích modulů byl navržen s desetinovou přesností, aby do sebe díly zapadly s patřičným pnutím.</p>
-          <p>Po dokončení návrhu následoval pečlivý "nesting" – optimalizované rozložení všech komponent na virtuální pracovní plochu. Cílem bylo minimalizovat odpad materiálu a zkrátit celkový čas stroje.</p>
+          <h2>Fáze 1: Příprava objektu</h2>
+          <p>Výchozí díl byl pro technologii optického skenování extrémně náročný, a to hned ze dvou důvodů: byl průhledný a zároveň vysoce lesklý.</p>
+          <p>Prvním nezbytným krokem byla proto povrchová úprava nanesením tenké vrstvy křídového spreje, který povrch zmatnil a zneprůhlednil. Následně bylo na díl strategicky rozmístěno přes 40 referenčních bodů. Klíčové bylo jejich zahuštění v místech se složitou geometrií (vnitřní záhyby a hrany), aby skener ani na moment neztratil sledování polohy.</p>
         </div>
         
         <div class="image-block">
-          <img src="Autocad.png" alt="2D plán rakety v AutoCADu" class="clickable-image">
+          <img src="Sprej.jpg" alt="Příprava dílu pomocí křídového spreje" class="clickable-image">
+          <img src="body.jpg" alt="Aplikace referenčních bodů na díl" style="margin-top: 20px;" class="clickable-image">
         </div>
       </section>
 
       <section class="project-section align-right">
-        <div class="text-block">
-          <h2>Fáze 2: Řezání</h2>
-          <p>Jako materiál byla dle zadání zvolena 6mm vlnitá lepenka. Tento materiál je sice dostupný a levný, ale jeho anizotropní povaha (má různou pevnost v různých směrech) a vnitřní vlnitá struktura představovaly vlastní sadu výzev, zejména u tenkých a křehkých dílů.</p>
-          <p>Pro převod digitálních dat do fyzické podoby byl nasazen CO2 laserový řezací stroj, který jsem ovládal přes software LightBurn. Nastavení parametrů bylo klíčové pro úspěch. Po sérii testů jsem pro 6mm karton stanovil optimální řezné parametry na rychlost 60 mm/s při výkonu 65 %, což zajistilo čistý řez bez nadměrného opálení.</p>
-        </div>
-        
         <div class="image-block">
-          <img src="Program rezani.jpg" alt="Příprava dat v LightBurn softwaru" class="clickable-image">
+          <img src="kalibrace.jpg" alt="Kalibrace senzoru" class="clickable-image">
+          
+        </div>
+
+        <div class="text-block">
+          <h2>Fáze 2: Akvizice dat</h2>
+          <p>Pro samotné skenování byl použit skener SimScan a software DefinSight. S ohledem na složitost dílu bylo nastaveno rozlišení 0.5 mm.</p>
+          <p>Proces byl časově náročný a vyžadoval skenování z několika úhlů a obou stran, přičemž celkový expoziční čas dosáhl 10 minut. I přes pečlivý sběr dat zůstaly v hůře dostupných záhybech drobné nedoskenované oblasti.</p>
         </div>
       </section>
 
       <section class="project-section align-left">
         <div class="text-block">
-          <h2>Nastavení stroje</h2>
-          <p>Neméně důležitá byla precizní příprava stroje. Ohniskovou vzdálenost jsem nastavil manuálně – nejprve hrubým krokováním pracovního stolu a následně mikro-kroky pro jemné doladění. Přesná výška byla finálně ověřena přiložením 6mm plastového etalonu k trysce. Pro maximální flexibilitu a úsporu materiálu byl počátek úlohy (Job Origin) v LightBurnu nastaven na pravý horní roh. Během celého procesu řezání byl samozřejmě aktivní asistovaný ofuk (Air Assist), který zajišťoval čistotu řezu a minimalizoval riziko hoření.</p>
+          <h2>Fáze 3: Zpracování sítě</h2>
+          <p>Následoval post-processing, který byl klíčovou a nejnáročnější částí úkolu. Surová data, importovaná do softwaru GOM Inspect, tvořila síť (mesh) o více než 1 000 000 bodech a obsahovala 330 děr.</p>
+          <p>Zpracování probíhalo v několika krocích. Nejprve bylo nutné ručně odstranit artefakty a díry, které v síti zanechaly odstraněné referenční body. Následně byly zbývající menší díry, vzniklé při skenování, zaceleny pomocí automatických funkcí pro opravu sítě. Protože surová síť byla geometricky velmi nerovná ("hrubá"), byla aplikována funkce pro vyhlazení, která povrch urovnala do realističtější a čistší podoby. Nakonec byl pro snížení výpočetní náročnosti redukován celkový počet polygonů na lépe spravovatelnou velikost, při zachování všech klíčových geometrických prvků.</p>
         </div>
         
         <div class="image-block">
-          <img src="narezano.jpg" alt="Detail řezací hlavy laseru v akci" class="clickable-image">
+          <img src="pred upravou.png" alt="Surová naskenovaná síť před úpravami" class="clickable-image">
+          <img src="staty.png" alt="Detail parametrů sítě - 1 milion bodů" style="margin-top: 20px;" class="clickable-image">
         </div>
       </section>
 
       <section class="project-section align-right">
-        <div class="text-block">
-          <h2>Fáze 3: Fyzická Montáž</h2>
-          <p>Pokud byl design intelektuální výzvou, montáž byla testem trpělivosti a prostorové představivosti. Přijít na správné pořadí a způsob, jak díly vzájemně propojit, bylo druhou nejtěžší částí projektu. Komplexní geometrie přistávacích "nohou" se ukázala být malou skládačkou sama o sobě.</p>
-          <p>Do této finální fáze jsem, s trochou nadsázky, zapojil celou rodinu a otestoval tak nejen pevnost zámků v kartonu, ale i jejich trpělivost.</p>
-        </div>
-        
         <div class="image-block">
-          <img src="rezane dily.jpg" alt="Vyřezané díly rakety připravené k montáži" class="clickable-image">
+          <img src="plocha.png" alt="Měření celkové plochy dílu" class="clickable-image">
+          <img src="největší rozměr.png" alt="Největší rozměr součásti" class="clickable-image">
+          <img src="dalsi rozmer.png" alt="Měření kontrolního rozměru v GOM Inspect" style="margin-top: 20px;" class="clickable-image">
+        </div>
+
+        <div class="text-block">
+          <h2>Fáze 4: Metrologická Analýza</h2>
+          <p>Na finální, opravené a vyhlazené síti byla provedena měření požadovaná v zadání. Byla zjištěna celková plocha povrchu dílu 272 386.5 mm², maximální rozměr dílu 461.129 mm a kontrolní libovolný rozměr 160.264 mm.</p>
         </div>
       </section>
 
       <section class="project-section-full">
-        <h2>Závěr</h2>
-        <p>Výsledkem je stabilní a vizuálně detailní model rakety, který je fyzickým důkazem, že i z obyčejného 2D materiálu lze vytvořit komplexní 3D strukturu. Projekt byl skvělým cvičením v systémovém myšlení – od 3D vize, přes 2D konstrukci až po precizní nastavení výrobního stroje.</p>
-        <p>Z projektu jsem si odnesl nejen hlubší porozumění procesu digitální fabrikace, ale hlavně – konečně mám na poličce vlastní raketu.</p>
+        <h2>Závěrečná Reflexe</h2>
+        <p>Tento projekt byl cennou lekcí v trpělivosti a preciznosti. Jednoznačně nejtěžší částí bylo správné nasnímání geometricky komplexních záhybů, kde skener snadno ztrácel optimální úhel.</p>
+        <p>Zároveň to byla vynikající příležitost pro seznámení se s profesionálním softwarem GOM Inspect. Právě naučit se správně používat jeho nástroje pro čištění, opravy, vyhlazování a finální měření sítě bylo největším přínosem tohoto úkolu.</p>
         
-        <img src="raketa.jpg" alt="Finální sestavený model rakety" class="full-width-image clickable-image">
+        <img src="final.png" alt="Finální naskenovaná součást" class="full-width-image clickable-image">
       </section>
-      
-    </div> </main>
+    </div>
+  </main>
 
   
 <div id="imageModal" class="modal-overlay">

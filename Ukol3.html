@@ -250,68 +250,75 @@
   <main>
     <div class="card">
       <a href="index.html" class="card-close-button">&times;</a> 
-    
-      <h1>🚀 Úkol 2: Lasserové řezání</h1>
 
-      <p>Pro druhý projekt jsem si stanovil cíl, který byl stejně tak technickou výzvou jako osobní záležitostí: přetavit svou fascinaci vesmírem a raketovou technikou v hmatatelný 3D model. Zadání bylo jasné – vytvořit komplexní objekt výhradně pomocí 2D řezání, který by mohl sloužit jako designový kousek na poličce.</p>
+      <h1>⚙️ Úkol 3: Návrh a Tisk Komplexního Mechanického Převodu</h1>
+
+      <p>Zadáním tohoto úkolu byla výroba jednoduchého mechanismu na ruční pohon s limitem 100g filamentu, který by demonstroval použití volného uložení a uložení s přesahem.</p>
+      <p>Rozhodl jsem se pojmout toto zadání jako výzvu a navrhnout od základu vlastní, pokročilejší mechanické řešení.</p>
+      <p>Výsledkem je "Dávkovač" – kompaktní převodovka, která převádí kontinuální rotační pohyb (vstupní klika) na přerušovaný (dávkovaný) rotační pohyb (výstupní pastorek). Tento typ převodu je základem pro montážní linky nebo podavače.</p>
+
 
       <section class="project-section align-left">
+        
         <div class="text-block">
-          <h2>Fáze 1: Digitální Rýsovací Prkno</h2>
-          <p>Celý projekt se zrodil v digitálním prostředí programu AutoCAD. Tato fáze se ukázala být jednou z nejnáročnějších. Nešlo jen o to "něco nakreslit"; bylo nutné navrhnout od nuly kompletní 3D strukturu, rozebrat ji v hlavě na desítky 2D dílů, a zajistit, aby po sestavení vše dokonale lícovalo.</p>
-          <p>Klíčovým konstrukčním prvkem byla technika "press-fit". To znamenalo, že celý model musel držet pohromadě bez jediného kousku lepidla, pouze silou tření a přesností zámků (zářezů). Každý prstenec tvořící trup, každý stabilizátor i každý díl přistávacích modulů byl navržen s desetinovou přesností, aby do sebe díly zapadly s patřičným pnutím.</p>
-          <p>Po dokončení návrhu následoval pečlivý "nesting" – optimalizované rozložení všech komponent na virtuální pracovní plochu. Cílem bylo minimalizovat odpad materiálu a zkrátit celkový čas stroje.</p>
+          <h2>Fáze 1: Koncept a Návrh v Autodesk Inventor</h2>
+          <p>Cílem bylo vytvořit mechanismus, kde by výstupní hřídel vykonávala pouze částečné otáčky, přestože vstup je plynulý. Toho bylo dosaženo synchronizací čtyř klíčových komponent.</p>
+          
+          <p>Prvním a řídícím srdcem systému je hybridní klika/vačka (bílý díl). Tento díl funguje duálně: jako klika poskytuje přes excentrický čep pohon pro pohybovou páku (červená) a zároveň jako vačka má na jedné straně specifický profil, po kterém klouže vahadlo (červené).</p>
+          <p>Dále je zde ozubený hřeben, který je součástí pohybové páky a vykonává posuvný a částečně otáčivý pohyb. Na něj navazuje vahadlo (červený díl), které sleduje vačkový profil a v závislosti na poloze zvedá nebo spouští celý modul s hřebenem. Poslední komponentou je výstupní pastorek (bílý díl), který odvádí přerušovaný otáčivý pohyb jinam.</p>
+
+          <p>Princip funkce: Když se bílé kolo otáčí, klika posouvá hřeben vpřed. Zároveň vačkový profil v této fázi přitlačí vahadlo dolů, čímž dojde k zařazení – zuby hřebene zapadnou do pastorku a pootočí jím. Ve druhé fázi (při zpětném pohybu hřebene) vačka naopak vahadlo zvedne, celý hřeben se vyřadí a vrátí se do své původní polohy naprázdno, aniž by otočil pastorkem zpět. Tím je zajištěn dávkovaný, jednosměrný pohyb.</p>
         </div>
         
         <div class="image-block">
-          <img src="Autocad.png" alt="2D plán rakety v AutoCADu" class="clickable-image">
+          <img src="cely mechanizmus.png" alt="Sestava mechanismu v Autodesk Inventor" class="clickable-image">
+          <img src="kolo.png" alt="Detail vačky a kliky v Inventoru" style="margin-top: 20px;" class="clickable-image">
         </div>
+        
       </section>
 
       <section class="project-section align-right">
-        <div class="text-block">
-          <h2>Fáze 2: Řezání</h2>
-          <p>Jako materiál byla dle zadání zvolena 6mm vlnitá lepenka. Tento materiál je sice dostupný a levný, ale jeho anizotropní povaha (má různou pevnost v různých směrech) a vnitřní vlnitá struktura představovaly vlastní sadu výzev, zejména u tenkých a křehkých dílů.</p>
-          <p>Pro převod digitálních dat do fyzické podoby byl nasazen CO2 laserový řezací stroj, který jsem ovládal přes software LightBurn. Nastavení parametrů bylo klíčové pro úspěch. Po sérii testů jsem pro 6mm karton stanovil optimální řezné parametry na rychlost 60 mm/s při výkonu 65 %, což zajistilo čistý řez bez nadměrného opálení.</p>
-        </div>
         
         <div class="image-block">
-          <img src="Program rezani.jpg" alt="Příprava dat v LightBurn softwaru" class="clickable-image">
+          <img src="slicer.png" alt="Příprava dílů v PrusaSlicer" class="clickable-image">
+          <img src="slicovano.png" alt="Slicováno" style="margin-top: 20px;" class="clickable-image">
         </div>
+
+        <div class="text-block">
+          <h2>Fáze 2: Design pro Aditivní Výrobu</h2>
+          <p>Proces návrhu byl silně zaměřen na klíčovou výzvu 3D tisku: precizní řízení tolerancí pro funkční sestavy.</p>
+          
+          <p>Pro volné uložení (vůle), které mělo zajistit plynulý kluzný a rotační pohyb (např. čepy v základně, klika v páce, vahadlo), byl v Inventoru navržen konstrukční rozměr. Původní návrh počítal s konstrukční vůlí 0.2 mm. Ačkoliv byl mechanismus funkční, empirické testování po sestavení ukázalo, že tato tolerance vede k nežádoucímu tření a tuhému chodu. Jako optimální byla pro tuto aplikaci a tiskárnu Prusa MK4S následně stanovena a doporučena revidovaná vůle 0.3 mm, která zajišťuje dokonalou plynulost.</p>
+          <p>Pro uložení s přesahem (press-fit), tedy pevné, nerozebiratelné spoje (konkrétně nalisování pohybové páky do klikového kola), byla využita specifická výhoda aditivní výroby. Na rozdíl od konvenčního obrábění, kde se pro press-fit typicky zvětšuje průměr hřídele, zde byl v Inventoru navržen otvor záměrně o 0.1 mm menší než čep. Tato metoda návrhu "díra na mínus" se ukázala jako vysoce efektivní a spoj je po nalisování naprosto pevný i bez lepidla.</p>
+        </div>
+        
       </section>
 
       <section class="project-section align-left">
+        
         <div class="text-block">
-          <h2>Nastavení stroje</h2>
-          <p>Neméně důležitá byla precizní příprava stroje. Ohniskovou vzdálenost jsem nastavil manuálně – nejprve hrubým krokováním pracovního stolu a následně mikro-kroky pro jemné doladění. Přesná výška byla finálně ověřena přiložením 6mm plastového etalonu k trysce. Pro maximální flexibilitu a úsporu materiálu byl počátek úlohy (Job Origin) v LightBurnu nastaven na pravý horní roh. Během celého procesu řezání byl samozřejmě aktivní asistovaný ofuk (Air Assist), který zajišťoval čistotu řezu a minimalizoval riziko hoření.</p>
+          <h2>Fáze 3: Realizace a Montáž</h2>
+          <p>Jednotlivé komponenty byly připraveny v PrusaSliceru a vytištěny z materiálu PLA na tiskárně Prusa MK4S. Pro tisk byl zvolen profil "Structural" s výškou vrstvy 0.2 mm pro zajištění dobré mechanické odolnosti. Různých barev bylo dosaženo tiskem jednotlivých dílů odděleně v dávkách, nikoliv vícebarevným tiskem.</p>
+          <p>Celková spotřeba filamentu byla pouhých 48 gramů, což pohodlně splnilo limit 100 gramů.</p>
         </div>
         
         <div class="image-block">
-          <img src="narezano.jpg" alt="Detail řezací hlavy laseru v akci" class="clickable-image">
-        </div>
-      </section>
-
-      <section class="project-section align-right">
-        <div class="text-block">
-          <h2>Fáze 3: Fyzická Montáž</h2>
-          <p>Pokud byl design intelektuální výzvou, montáž byla testem trpělivosti a prostorové představivosti. Přijít na správné pořadí a způsob, jak díly vzájemně propojit, bylo druhou nejtěžší částí projektu. Komplexní geometrie přistávacích "nohou" se ukázala být malou skládačkou sama o sobě.</p>
-          <p>Do této finální fáze jsem, s trochou nadsázky, zapojil celou rodinu a otestoval tak nejen pevnost zámků v kartonu, ale i jejich trpělivost.</p>
+          <img src="tisk.jpg" alt="Tisk dílů na Prusa MK4S" class="clickable-image">
         </div>
         
-        <div class="image-block">
-          <img src="rezane dily.jpg" alt="Vyřezané díly rakety připravené k montáži" class="clickable-image">
-        </div>
       </section>
 
       <section class="project-section-full">
-        <h2>Závěr</h2>
-        <p>Výsledkem je stabilní a vizuálně detailní model rakety, který je fyzickým důkazem, že i z obyčejného 2D materiálu lze vytvořit komplexní 3D strukturu. Projekt byl skvělým cvičením v systémovém myšlení – od 3D vize, přes 2D konstrukci až po precizní nastavení výrobního stroje.</p>
-        <p>Z projektu jsem si odnesl nejen hlubší porozumění procesu digitální fabrikace, ale hlavně – konečně mám na poličce vlastní raketu.</p>
         
-        <img src="raketa.jpg" alt="Finální sestavený model rakety" class="full-width-image clickable-image">
-      </section>
+        <h2>Závěrečná Reflexe</h2>
+        <p>Mechanismus "Dávkovač" fungoval na první pokus přesně dle návrhového záměru. Klíčovým přínosem projektu není jen samotný funkční model, ale především praktické ověření a stanovení optimálních konstrukčních tolerancí pro volná a pevná uložení v FDM tisku.</p>
+        <p>Projekt úspěšně demonstruje, jak je možné přetavit komplexní mechanickou myšlenku (synchronizovaný přerušovaný převod) z digitálního návrhu ve funkční, robustní a přesný fyzický prototyp.</p>
+        
+        <img src="davkovac.jpg" alt="Finální sestavený model dávkovače" class="full-width-image clickable-image">
       
-    </div> </main>
+      </section>
+    </div>
+  </main>
 
   
 <div id="imageModal" class="modal-overlay">
