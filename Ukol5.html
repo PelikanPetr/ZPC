@@ -1,181 +1,250 @@
 <!DOCTYPE html>
 <html lang="cs">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>ZPC 2025</title>
-  <style>
-    /* Základní reset */
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-      font-family: Arial, sans-serif;
-    }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ZPC 2025</title>
+<style>
+  /* Základní reset */
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+  }
 
-    body {
-      background: linear-gradient(to bottom, #0a0f2c, #0047ab);
-      color: white;
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-    }
+  body {
+    background: linear-gradient(to bottom, #0a0f2c, #0047ab);
+    color: white;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+  }
 
-    /* Horní lišta */
-    header {
-      background: #1a1040;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 15px 30px;
-      font-size: 18px;
-    }
+  /* Horní lišta */
+  header {
+    background: #1a1040;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 30px;
+    font-size: 18px;
+  }
 
-    header .logo {
-      font-weight: bold;
-      color: #ff4669;
-    }
+  header .logo {
+    font-weight: bold;
+    color: #ff4669;
+  }
 
-    header nav a {
-      color: white;
-      text-decoration: none;
-      margin-left: 20px;
-      transition: color 0.3s ease;
-    }
+  header nav a {
+    color: white;
+    text-decoration: none;
+    margin-left: 20px;
+    transition: color 0.3s ease;
+  }
 
-    header nav a:hover {
-      color: #ff4669;
-    }
+  header nav a:hover {
+    color: #ff4669;
+  }
 
-    /* Centrální obsah */
-    main {
-      flex: 1;
-      display: flex;
-      flex-direction: column; /* <-- karty pod sebou */
-      justify-content: flex-start;
-      align-items: center;
-      padding: 40px 20px;
-      gap: 30px; /* mezera mezi kartami */
-    }
+  /* Centrální obsah */
+  main {
+    flex: 1;
+    display: flex;
+    flex-direction: column; /* <-- karty pod sebou */
+    justify-content: flex-start;
+    align-items: center;
+    padding: 40px 20px;
+    gap: 30px; /* mezera mezi kartami */
+  }
 
-    .card {
-  position: relative;
-  width: 100%;
-  max-width: 1000px;  /* Maximální šířka obsahu na stránce */
-  padding: 20px;        /* Vnitřní okraj, aby text nebyl nalepený na kraji */
-  overflow: auto;       /* Důležité, aby správně obalil plovoucí obrázek */
-  color: #dddddd;       /* Světlejší barva pro běžný text, aby byl čitelný */
-}
+  .card {
+    position: relative;
+    width: 100%;
+    max-width: 1000px;  /* Maximální šířka obsahu na stránce */
+    padding: 20px;      /* Vnitřní okraj, aby text nebyl nalepený na kraji */
+    overflow: auto;     /* Důležité, aby správně obalil plovoucí obrázek */
+    color: #dddddd;     /* Světlejší barva pro běžný text, aby byl čitelný */
+  }
 
-/* Hover efekt už není potřeba, když je karta neviditelná, proto ho vypneme */
-.card:hover {
-  transform: none;
-  box-shadow: none;
-}
+  .card:hover {
+    transform: none;
+    box-shadow: none;
+  }
 
-/* --- VYLEPŠENÍ VZHLEDU TEXTU --- */
+  /* --- VYLEPŠENÍ VZHLEDU TEXTU --- */
 
-/* Hlavní nadpis projektu */
-.card h1 {
-  color: white;
-  text-align: center;
-  font-size: 38px;
-  font-weight: 900; /* Extra tučné písmo */
-  margin-bottom: 10px;
-  letter-spacing: 1px; /* Lehké mezery mezi písmeny pro lepší vzhled */
-}
+  .card h1 {
+    color: white;
+    text-align: center;
+    font-size: 38px;
+    font-weight: 900;
+    margin-bottom: 10px;
+    letter-spacing: 1px;
+  }
 
-/* Nadpisy sekcí (Motivace, Cíle, ...) */
-.card h2 {
-  color: white;
-  text-align: center;
-  font-size: 28px;
-  font-weight: 700; /* Tučné písmo */
-  margin-top: 50px;    /* Větší mezera NAD nadpisem pro jasné oddělení sekcí */
-  margin-bottom: 20px;
-  border-bottom: 2px solid #ff4669; /* Stylové podtržení místo staré čáry */
-  padding-bottom: 10px; /* Mezera mezi textem a podtržením */
-}
+  .card h2 {
+    color: white;
+    text-align: center;
+    font-size: 28px;
+    font-weight: 700;
+    margin-top: 50px;
+    margin-bottom: 20px;
+    border-bottom: 2px solid #ff4669;
+    padding-bottom: 10px;
+  }
 
-/* Podnadpisy (Dílčí cíle) */
-.card h3 {
+  .card h3 {
     color: #dddddd;
     font-size: 20px;
     font-weight: 700;
     margin-top: 30px;
     margin-bottom: 15px;
-}
+  }
 
-/* Běžný text v odstavcích */
-.card p {
-  text-align: left;
-  line-height: 1.7;   /* Zvětšené řádkování pro mnohem lepší čitelnost */
-  font-size: 18px;
-  color: #c5c5c5;     /* Lehce tlumená bílá, aby text "nekřičel" */
-}
+  .card p {
+    text-align: left;
+    line-height: 1.7;
+    font-size: 18px;
+    color: #c5c5c5;
+  }
 
-/* Stylování seznamů (odrážky) */
-.card ul {
-    list-style: none; /* Odstraní výchozí odrážky */
+  .card ul {
+    list-style: none;
     padding-left: 20px;
-}
+  }
 
-.card li {
+  .card li {
     padding-left: 25px;
     position: relative;
     margin-bottom: 10px;
     font-size: 18px;
     color: #c5c5c5;
-}
+  }
 
-/* Vytvoření vlastní, barevné odrážky */
-.card li::before {
-    content: '■'; /* Můžeš zkusit i jiné symboly, např. '●' nebo '✔' */
+  .card li::before {
+    content: '■';
     position: absolute;
     left: 0;
     top: 0;
-    color: #ff4669; /* Barva odrážky, aby ladila s webem */
+    color: #ff4669;
     font-size: 14px;
-}
+  }
 
-/* Skryjeme původní čáru <hr>, protože H2 teď mají hezčí podtržení */
-.card hr {
+  .card hr {
     display: none;
-}
+  }
 
-    .Visual {
-  float: right;
-  margin-left: 30px;
-  margin-bottom: 15px;
-  width: 1000px;        /* ZVĚTŠENO: Tuto hodnotu si můžeš libovolně měnit */
-  border-radius: 0;    /* ZRUŠENO ZAKULACENÍ: Toto zajistí ostré rohy */
-}
-.card-close-button {
-  position: absolute;      /* Umožní pozicování uvnitř .card kontejneru */
-  top: 0px;               /* Vzdálenost od horního okraje (můžeš si upravit) */
-  right: 0px;             /* Vzdálenost od pravého okraje (můžeš si upravit) */
+  .Visual {
+    float: right;
+    margin-left: 30px;
+    margin-bottom: 15px;
+    width: 1000px;
+    border-radius: 0;
+  }
+  .card-close-button {
+    position: absolute;
+    top: 0px;
+    right: 0px;
+    color: #ff4669;
+    font-size: 40px;
+    font-weight: bold;
+    text-decoration: none;
+    line-height: 1;
+    z-index: 10;
+    transition: color 0.2s ease, transform 0.2s ease;
+  }
+
+  .card-close-button:hover {
+    color: white;
+    transform: scale(1.1);
+  }
   
-  color: #ff4669;          /* Barva křížku */
-  font-size: 40px;         /* <-- VĚTŠÍ: Změněno z 32px na 40px */
-  font-weight: bold;       /* Tučnější */
-  text-decoration: none;   /* <-- BEZ ČÁRY: Odstraní podtržení odkazu */
-  line-height: 1;          /* Zajistí správnou velikost */
-  z-index: 10;             /* Aby byl křížek nad ostatním obsahem */
-  transition: color 0.2s ease, transform 0.2s ease; /* Plynulý přechod */
-}
+  /* Spodní lišta */
+  footer {
+    text-align: center;
+    padding: 10px;
+    font-size: 14px;
+    background: #1a1040;
+  }
 
-.card-close-button:hover {
-  color: white;                   /* Změní barvu při najetí myši */
-  transform: scale(1.1);          /* Lehce zvětší křížek při najetí */
+  /* --- KÓD PRO LAYOUT (OPRAVENO UMÍSTĚNÍ) --- */
+  .project-section {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    margin-top: 30px;
+    margin-bottom: 30px;
+    gap: 30px;
+  }
+  .project-section .text-block,
+  .project-section .image-block {
+    flex: 1;
+    min-width: 300px;
+  }
+  .project-section.align-left .text-block { order: 1; }
+  .project-section.align-left .image-block { order: 2; }
+  .project-section.align-right .text-block { order: 2; }
+  .project-section.align-right .image-block { order: 1; }
+  .project-section img {
+    width: 100%;
+    height: auto;
+    border-radius: 8px;
+  }
+  .full-width-image {
+    width: 100%;
+    height: auto;
+    border-radius: 8px;
+    margin-top: 30px;
+  }
+
+  /* --- KÓD PRO MODÁL (LIGHTBOX) --- */
+  .clickable-image {
+    cursor: pointer;
+    transition: transform 0.2s ease;
+  }
+  .clickable-image:hover {
+    transform: scale(1.03);
+  }
+  .modal-overlay {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.85);
+    justify-content: center;
+    align-items: center;
+  }
+  .modal-content {
+    max-width: 85%;
+    max-height: 85%;
+    object-fit: contain;
+  }
+  .modal-close-button {
+    position: absolute;
+    top: 20px;
+    right: 35px;
+    color: #f1f1f1;
+    font-size: 50px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: color 0.3s ease;
+  }
+  .modal-close-button:hover {
+    color: #ff4669;
+  }
+.full-width-image {
+  display: block;           /* Musí to být blok, aby fungovalo margin: auto */
+  margin: 30px auto 0 auto; /* Tady je to centrování (doprava/doleva) */
+  max-width: 600px;       /* Tady je ta menší velikost */
+  width: 100%;            
+  height: auto;
+  border-radius: 8px;
 }
-    /* Spodní lišta */
-    footer {
-      text-align: center;
-      padding: 10px;
-      font-size: 14px;
-      background: #1a1040;
-    }
-  </style>
+</style>
 </head>
 <body>
   <header>
@@ -183,16 +252,108 @@
     <nav>
       <a href="O-mne.html">O mně</a>
       <a href="Semestrální projekt.html">Semestrální projekt</a>
-        </nav>
+    </nav>
   </header>
 
   <main>
- <div class="card">
-       <a href="index.html" class="card-close-button">&times;</a> 
-   
+    <div class="card">
+      <a href="index.html" class="card-close-button">&times;</a> 
+       
+
+<h1>🚦 Úkol 5: Arduino – Systém Řízení Vjezdu</h1>
+
+<p>Cílem tohoto projektu bylo seznámení se s platformou Arduino, senzory a programováním mikrokontrolerů. Zadáním bylo vytvořit funkční zařízení, které by reagovalo na své okolí.</p>
+<p>Rozhodl jsem se navrhnout "Systém řízení vjezdu" – chytrý semafor, který v klidovém stavu bliká a po detekci přijíždějícího objektu (auta) spustí plnou sekvenci semaforu pro bezpečný průjezd.</p>
+
+
+<section class="project-section align-left">
+  
+  <div class="text-block">
+    <h2>Fáze 1: Hardware a Zapojení</h2>
+    <p>Jako mozek celého systému byla použita deska Arduino Uno. K ní byly na nepájivém poli připojeny klíčové komponenty:</p>
+    <p>Senzor HC-SR04 sloužil jako "oči" systému. Jako výstup sloužila sestava tří LED diod (červená, žlutá, zelená). Každá LED byla dle správné praxe zapojena v sérii s 150 Ω rezistorem k omezení proudu.</p>
+    <p>Správné fyzické zapojení všech komponent na breadboardu, aby nedošlo ke zkratu a vše spolehlivě komunikovalo, bylo první polovinou této výzvy.</p>
+  </div>
+  
+  <div class="image-block">
+    <img src="arduino zapojení.jpg" alt="Celkové zapojení Arduina a breadboardu" class="clickable-image">
+    <img src="zapojení .jpg" alt="Detail zapojení senzoru HC-SR04 a LED diod" style="margin-top: 20px;" class="clickable-image">
+  </div>
+  
+</section>
+
+<section class="project-section align-right">
+  
+  <div class="image-block">
+    <img src="arduino kod.png" alt="Ukázka kódu pro řízení stavového automatu v Arduino IDE" class="clickable-image">
+  </div>
+
+  <div class="text-block">
+    <h2>Fáze 2: Software</h2>
+    <p>Druhou, stejně náročnou výzvou, byl návrh řídicího programu v jazyce C++ (Arduino). Aby systém fungoval logicky a "nezamrzal", byl naprogramován jako stavový automat.</p>
+    <p>Stav 0 (Klidový): V tomto stavu program bliká žlutou LED pomocí neblokující funkce <code>millis()</code> a souběžně měří vzdálenost.</p>
+    <p>Přechod do Stavu 1: Jakmile senzor změří vzdálenost menší než 20 cm, systém se přepne do Stavu 1.</p>
+    <p>Stav 1 (Sekvence): Zde se spustí blokující funkce, která provede celou logiku: červená (5s), žlutá (2s) a zelená. Program poté čeká, dokud senzor nepotvrdí, že objekt odjel, a teprve poté se vrátí do klidového Stavu 0.</p>
+  </div>
+  
+</section>
+
+<section class="project-section align-left">
+  
+  <div class="text-block">
+    <h2>Fáze 3: Testování a Ladění</h2>
+    <p>Po nahrání kódu do Arduina systém fungoval dle očekávání. Komunikace se sériovým monitorem (<code>Serial.print()</code>) byla klíčová pro ladění a sledování, jakou vzdálenost senzor reálně měří a v jakém stavu se automat právě nachází.</p>
+  </div>
+  
+  <div class="image-block">
+    <img src="zapojeny piny.jpg" alt="Detail připojené desky Arduino Uno" class="clickable-image">
+  </div>
+  
+</section>
+
+<section class="project-section-full">
+  
+  <h2>Závěrečná Reflexe</h2>
+  <p>Tento projekt byl cennou lekcí, která vyváženě prověřila jak hardwarové (zapojování), tak softwarové (programování stavového automatu) dovednosti. Ukázalo se, že obě části byly stejně náročné. Největším přínosem bylo pochopení rozdílu mezi blokujícím (<code>delay()</code>) a neblokujícím (<code>millis()</code>) programováním pro řízení více úloh najednou.</p>
+  
+  <video class="full-width-image" autoplay loop muted playsinline>
+  <source src="IMG_1141.mov" type="video/mp4">
+  Tvůj prohlížeč nepodporuje přehrávání videa.
+</video>
+</section>
     </div>
   </main>
 
- 
+  
+<div id="imageModal" class="modal-overlay">
+  <span class="modal-close-button">&times;</span>
+  <img class="modal-content" id="modalImageContent">
+</div>
+
+
+<script>
+  var modal = document.getElementById("imageModal");
+  var modalImg = document.getElementById("modalImageContent");
+  var span = document.getElementsByClassName("modal-close-button")[0];
+  var images = document.getElementsByClassName("clickable-image");
+
+  for (var i = 0; i < images.length; i++) {
+    images[i].onclick = function() {
+      modal.style.display = "flex";
+      modalImg.src = this.src;
+    }
+  }
+
+  span.onclick = function() {
+    modal.style.display = "none";
+  }
+
+  modal.onclick = function(event) {
+    if (event.target == modal) {
+      modal.style.display = "none";
+    }
+  }
+</script>
+
 </body>
 </html>
