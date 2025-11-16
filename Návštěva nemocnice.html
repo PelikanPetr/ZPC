@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Projekt: Rehabilitační rukavice</title>
+<style>
+  /* Základní reset */
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+  }
+
+  body {
+    background: linear-gradient(to bottom, #0a0f2c, #0047ab);
+    color: white;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+  }
+
+  /* Horní lišta */
+  header {
+    background: #1a1040;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 30px;
+    font-size: 18px;
+  }
+
+  header .logo {
+    font-weight: bold;
+    color: #ff4669;
+  }
+
+  header nav a {
+    color: white;
+    text-decoration: none;
+    margin-left: 20px;
+    transition: color 0.3s ease;
+  }
+
+  header nav a:hover {
+    color: #ff4669;
+  }
+
+  /* Centrální obsah */
+  main {
+    flex: 1;
+    display: flex;
+    flex-direction: column; /* <-- karty pod sebou */
+    justify-content: flex-start;
+    align-items: center;
+    padding: 40px 20px;
+    gap: 30px; /* mezera mezi kartami */
+  }
+
+  .card {
+    position: relative;
+    width: 100%;
+    max-width: 1000px;  /* Maximální šířka obsahu na stránce */
+    padding: 20px;      /* Vnitřní okraj, aby text nebyl nalepený na kraji */
+    overflow: auto;     /* Důležité, aby správně obalil plovoucí obrázek */
+    color: #dddddd;     /* Světlejší barva pro běžný text, aby byl čitelný */
+  }
+
+  .card:hover {
+    transform: none;
+    box-shadow: none;
+  }
+
+  /* --- VYLEPŠENÍ VZHLEDU TEXTU --- */
+
+  .card h1 {
+    color: white;
+    text-align: center;
+    font-size: 38px;
+    font-weight: 900;
+    margin-bottom: 25px; /* Větší mezera pod hlavním titulkem */
+    letter-spacing: 1px;
+  }
+
+  .card h2 {
+    color: white;
+    text-align: left; /* Změna na zarovnání doleva */
+    font-size: 28px;
+    font-weight: 700;
+    margin-top: 20px; /* Snížení horní mezery */
+    margin-bottom: 20px;
+    border-bottom: 2px solid #ff4669;
+    padding-bottom: 10px;
+  }
+
+  .card h3 {
+    color: #dddddd;
+    font-size: 20px;
+    font-weight: 700;
+    margin-top: 30px;
+    margin-bottom: 15px;
+  }
+
+  .card p {
+    text-align: left;
+    line-height: 1.7;
+    font-size: 18px;
+    color: #c5c5c5;
+    margin-bottom: 15px; /* Přidána mezera mezi odstavci */
+  }
+
+  .card ul {
+    list-style: none;
+    padding-left: 20px;
+  }
+
+  .card li {
+    padding-left: 25px;
+    position: relative;
+    margin-bottom: 10px;
+    font-size: 18px;
+    color: #c5c5c5;
+  }
+
+  .card li::before {
+    content: '■';
+    position: absolute;
+    left: 0;
+    top: 0;
+    color: #ff4669;
+    font-size: 14px;
+  }
+
+  .card hr {
+    display: none;
+  }
+
+  /* Toto je ze starého kódu, teď se nepoužívá díky .project-section */
+  .Visual {
+    display: none;
+  }
+  
+  .card-close-button {
+    position: absolute;
+    top: 0px;
+    right: 0px;
+    color: #ff4669;
+    font-size: 40px;
+    font-weight: bold;
+    text-decoration: none;
+    line-height: 1;
+    z-index: 10;
+    transition: color 0.2s ease, transform 0.2s ease;
+  }
+
+  .card-close-button:hover {
+    color: white;
+    transform: scale(1.1);
+  }
+  
+  /* Spodní lišta */
+  footer {
+    text-align: center;
+    padding: 10px;
+    font-size: 14px;
+    background: #1a1040;
+  }
+
+  /* --- KÓD PRO LAYOUT (OPRAVENO UMÍSTĚNÍ) --- */
+  .project-section {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    margin-top: 30px;
+    margin-bottom: 30px;
+    gap: 30px;
+  }
+  .project-section .text-block,
+  .project-section .image-block {
+    flex: 1;
+    min-width: 300px;
+  }
+  .project-section.align-left .text-block { order: 1; }
+  .project-section.align-left .image-block { order: 2; }
+  .project-section.align-right .text-block { order: 2; }
+  .project-section.align-right .image-block { order: 1; }
+  
+  .project-section img {
+    width: 100%;
+    height: auto;
+    border-radius: 8px;
+  }
+  
+  /* Přidáno pro plnou šířku */
+  .project-section-full {
+      margin-top: 30px;
+  }
+  
+  .full-width-image {
+    width: 100%;
+    height: auto;
+    border-radius: 8px;
+    margin-top: 30px;
+  }
+
+  /* --- KÓD PRO MODÁL (LIGHTBOX) --- */
+  .clickable-image {
+    cursor: pointer;
+    transition: transform 0.2s ease;
+  }
+  .clickable-image:hover {
+    transform: scale(1.03);
+  }
+  .modal-overlay {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.85);
+    justify-content: center;
+    align-items: center;
+  }
+  .modal-content {
+    max-width: 85%;
+    max-height: 85%;
+    object-fit: contain;
+  }
+  .modal-close-button {
+    position: absolute;
+    top: 20px;
+    right: 35px;
+    color: #f1f1f1;
+    font-size: 50px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: color 0.3s ease;
+  }
+  .modal-close-button:hover {
+    color: #ff4669;
+  }
+</style>
+</head>
+<body>
+  <header>
+    <div class="logo">⚙ ZPC 2025</div>
+    <nav>
+      <a href="O-mne.html">O mně</a>
+      <a href="Semestrální projekt.html">Semestrální projekt</a>
+    </nav>
+  </header>
+
+  <main>
+    <div class="card">
+      <a href="Semestrální projekt.html" class="card-close-button">&times;</a> 
+    
+      <h1>🩺 Od postřehů z praxe k inovaci: Proč vyvíjím novou generaci rehabilitační rukavice</h1>
+
+      <p>Rehabilitace ruky po cévní mozkové příhodě nebo úrazu je pro pacienty jednou z nejtěžších a nejdůležitějších cest k návratu do běžného života. Moderní technologie, jako je robotická rukavice Gloreha, přinesly revoluci do pasivního i aktivního procvičování. Ale jaká je realita každodenní práce na rehabilitačním oddělení?</p>
+      
+      <p>Abych to zjistil, navštívil jsem <strong>rehabilitační oddělení nemocnice v Uherském Hradišti</strong> a mluvil přímo s těmi nejpovolanějšími – s fyzioterapeuty. Mým cílem nebylo jen vidět techniku v akci, ale především naslouchat. A právě v postřezích z praxe se zrodil můj projekt.</p>
+
+
+      <section class="project-section align-left">
+        <div class="text-block">
+          <h2>Výzva: Když se špičková technologie potká s realitou</h2>
+          <p>Systémy jako Gloreha jsou výkonné. Umožňují pacientům progresivní cvičení, nabízejí virtuální hry a jsou spolehlivé. Sestra, která se systémem denně pracuje, si pochvaluje širokou škálu cvičení. Zároveň mi ale popsala každodenní výzvy, které se staly hnacím motorem mé inovace.</p>
+        </div>
+        
+        <div class="image-block">
+          <img src="stroj.jpg" alt="Rehabilitační stanice Gloreha" class="clickable-image">
+        </div>
+      </section>
+
+      <section class="project-section align-right">
+        <div class="text-block">
+          <h2>Problémy z praxe: Čas a (ne)padnutí</h2>
+          <p><strong>1. Drahocenný čas přípravy:</strong> "Připravit pacienta a rukavici trvá přibližně 10 minut," dozvěděl jsem se. Deset minut drahocenného času terapie, který je ztracen nastavováním. Problémem není jen připojení pěti lankovodů do stanice, což je pro nové zaměstnance složité, ale i samotné nasazování rukavice.</p>
+          <p><strong>2. Problém s (ne)padnutím:</strong> Současný design exoskeletu používá "náprstky" na konce prstů. <strong>Sám jsem si rukavici vyzkoušel a</strong> to se ukázalo jako velký problém. Pacientům s mírnými deformitami ruky nesedí. Pacientům, kterým se potí ruce, zase vyklouzává. Suché zipy navíc nedrží ruku dostatečně pevně a rukavice se během cvičení pomalu "vyvléká".</p>
+        </div>
+        
+        <div class="image-block">
+          <img src="dávkovače.jpg" alt="Detail náprstku rukavice" class="clickable-image">
+        </div>
+      </section>
+
+      <section class="project-section align-left">
+        <div class="text-block">
+          <h2>Logistika a moje vize</h2>
+          <p><strong>3. Logistická noční můra:</strong> Aby oddělení pokrylo všechny pacienty, musí skladovat obrovské množství variant: pasivní rukavice, senzorové rukavice, pro levou ruku, pro pravou ruku, a to vše v několika velikostech (S, M, L...). Výsledkem je 16 a více různých rukavic, které zabírají místo a komplikují práci.</p>
+          
+          <p>Můj projekt se rozhodl tyto tři klíčové problémy vyřešit. Věřím, že technologie má odstraňovat bariéry, ne vytvářet nové. Moje inovace stojí na třech pilířích:</p>
+        </div>
+        
+        <div class="image-block">
+          <img src="náprstek.jpg" alt="Senzorová rukavice pro druhou ruku" class="clickable-image">
+        </div>
+      </section>
+      
+      <section class="project-section align-right">
+        <div class="text-block">
+          <h2>Řešení: Univerzálnost a plná opora</h2>
+          <p><strong>1. Univerzální design "Vše v Jednom":</strong> Proč mít senzorovou rukavici pro snímání pohybu a pasivní rukavici pro cvičení zvlášť? A proč mít levou a pravou? Moje rukavice integruje pasivní pohon i aktivní snímání do jednoho celku. Je navržena tak, aby byla plně oboustranná a díky flexibilním materiálům pokryla všechny velikosti. Výsledek: Místo 16 rukavic stačí jedna.</p>
+          <p><strong>2. Plný design pro stoprocentní oporu:</strong> Říkám sbohem "náprstkům". Moje rukavice je navržena jako plná, vyplněná rukavice. Tento design poskytuje mnohem lepší oporu a pohodlí, zejména pro pacienty s deformitami nebo spasticitou. Rukavice pevně, ale jemně obemkne celou ruku a prsty, čímž zabraňuje prokluzování.</p>
+        </div>
+        
+        <div class="image-block">
+          <img src="senzorová rukavice.jpg" alt="Současný exoskelet rukavice" class="clickable-image">
+        </div>
+      </section>
+
+      <section class="project-section-full">
+        <h2>Budoucnost rehabilitace je v jednoduchosti</h2>
+        <p><strong>3. Rychlé a pevné upnutí:</strong> Reaguji na problém "vyvlékání". Můj systém upínání využívá vícebodové zajištění pomocí vylepšených suchých zipů. Ruka je v rukavici fixována bezpečně a stabilně po celou dobu terapie, ale nasazení je otázkou okamžiku. Výsledek: Zkrácení času přípravy z deseti minut na minimum.</p>
+        
+        <p>Mým cílem je vytvořit nástroj, který terapeuti milují používat a pacienti rádi nosí. Snížením logistické zátěže a dramatickým zkrácením času přípravy dávám sestrám a fyzioterapeutům to nejcennější – čas věnovaný pacientovi.</p>
+        
+        <p><strong>Pracuji na rukavici, která se přizpůsobí pacientovi. Ne naopak.</strong></p>
+        
+        <img src="exoskelet.jpg" alt="Porty pro připojení lankovodů" class="full-width-image clickable-image">
+      </section>
+      
+      </div> </main>
+
+  
+<div id="imageModal" class="modal-overlay">
+  <span class="modal-close-button">&times;</span>
+  <img class="modal-content" id="modalImageContent">
+</div>
+
+
+<script>
+  var modal = document.getElementById("imageModal");
+  var modalImg = document.getElementById("modalImageContent");
+  var span = document.getElementsByClassName("modal-close-button")[0];
+  var images = document.getElementsByClassName("clickable-image");
+
+  for (var i = 0; i < images.length; i++) {
+    images[i].onclick = function() {
+      modal.style.display = "flex";
+      modalImg.src = this.src;
+    }
+  }
+
+  span.onclick = function() {
+    modal.style.display = "none";
+  }
+
+  modal.onclick = function(event) {
+    if (event.target == modal) {
+      modal.style.display = "none";
+    }
+  }
+</script>
+
+</body>
+</html>

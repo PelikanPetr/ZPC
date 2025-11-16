@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Projekt: Iterace 1</title>
+<style>
+  /* Základní reset */
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+  }
+
+  body {
+    background: linear-gradient(to bottom, #0a0f2c, #0047ab);
+    color: white;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+  }
+
+  /* Horní lišta */
+  header {
+    background: #1a1040;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 30px;
+    font-size: 18px;
+  }
+
+  header .logo {
+    font-weight: bold;
+    color: #ff4669;
+  }
+
+  header nav a {
+    color: white;
+    text-decoration: none;
+    margin-left: 20px;
+    transition: color 0.3s ease;
+  }
+
+  header nav a:hover {
+    color: #ff4669;
+  }
+
+  /* Centrální obsah */
+  main {
+    flex: 1;
+    display: flex;
+    flex-direction: column; /* <-- karty pod sebou */
+    justify-content: flex-start;
+    align-items: center;
+    padding: 40px 20px;
+    gap: 30px; /* mezera mezi kartami */
+  }
+
+  .card {
+    position: relative;
+    width: 100%;
+    max-width: 1000px;  /* Maximální šířka obsahu na stránce */
+    padding: 20px;      /* Vnitřní okraj, aby text nebyl nalepený na kraji */
+    overflow: auto;     /* Důležité, aby správně obalil plovoucí obrázek */
+    color: #dddddd;     /* Světlejší barva pro běžný text, aby byl čitelný */
+  }
+
+  .card:hover {
+    transform: none;
+    box-shadow: none;
+  }
+
+  /* --- VYLEPŠENÍ VZHLEDU TEXTU --- */
+
+  .card h1 {
+    color: white;
+    text-align: center;
+    font-size: 38px;
+    font-weight: 900;
+    margin-bottom: 25px; /* Větší mezera pod hlavním titulkem */
+    letter-spacing: 1px;
+  }
+
+  .card h2 {
+    color: white;
+    text-align: left; /* Zarovnání doleva */
+    font-size: 28px;
+    font-weight: 700;
+    margin-top: 20px; /* Snížení horní mezery */
+    margin-bottom: 20px;
+    border-bottom: 2px solid #ff4669;
+    padding-bottom: 10px;
+  }
+
+  .card h3 {
+    color: #dddddd;
+    font-size: 20px;
+    font-weight: 700;
+    margin-top: 30px;
+    margin-bottom: 15px;
+  }
+
+  .card p {
+    text-align: left;
+    line-height: 1.7;
+    font-size: 18px;
+    color: #c5c5c5;
+    margin-bottom: 15px; /* Přidána mezera mezi odstavci */
+  }
+
+  .card ul {
+    list-style: none;
+    padding-left: 20px;
+  }
+
+  .card li {
+    padding-left: 25px;
+    position: relative;
+    margin-bottom: 10px;
+    font-size: 18px;
+    color: #c5c5c5;
+  }
+
+  .card li::before {
+    content: '■';
+    position: absolute;
+    left: 0;
+    top: 0;
+    color: #ff4669;
+    font-size: 14px;
+  }
+
+  .card hr {
+    display: none;
+  }
+
+  /* Toto je ze starého kódu, teď se nepoužívá díky .project-section */
+  .Visual {
+    display: none;
+  }
+  
+  .card-close-button {
+    position: absolute;
+    top: 0px;
+    right: 0px;
+    color: #ff4669;
+    font-size: 40px;
+    font-weight: bold;
+    text-decoration: none;
+    line-height: 1;
+    z-index: 10;
+    transition: color 0.2s ease, transform 0.2s ease;
+  }
+
+  .card-close-button:hover {
+    color: white;
+    transform: scale(1.1);
+  }
+  
+  /* Spodní lišta */
+  footer {
+    text-align: center;
+    padding: 10px;
+    font-size: 14px;
+    background: #1a1040;
+  }
+
+  /* --- KÓD PRO LAYOUT (OPRAVENO UMÍSTĚNÍ) --- */
+  .project-section {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    margin-top: 30px;
+    margin-bottom: 30px;
+    gap: 30px;
+  }
+  .project-section .text-block,
+  .project-section .image-block {
+    flex: 1;
+    min-width: 300px;
+  }
+  .project-section.align-left .text-block { order: 1; }
+  .project-section.align-left .image-block { order: 2; }
+  .project-section.align-right .text-block { order: 2; }
+  .project-section.align-right .image-block { order: 1; }
+  
+  .project-section img,
+  .project-section video { /* Přidáno video */
+    width: 100%;
+    height: auto;
+    border-radius: 8px;
+  }
+  
+  /* Přidáno pro plnou šířku */
+  .project-section-full {
+      margin-top: 30px;
+  }
+  
+  .full-width-image,
+  .full-width-video { /* Přidáno video */
+    width: 100%;
+    height: auto;
+    border-radius: 8px;
+    margin-top: 30px;
+  }
+
+  /* --- KÓD PRO MODÁL (LIGHTBOX) --- */
+  .clickable-image {
+    cursor: pointer;
+    transition: transform 0.2s ease;
+  }
+  .clickable-image:hover {
+    transform: scale(1.03);
+  }
+  .modal-overlay {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.85);
+    justify-content: center;
+    align-items: center;
+  }
+  .modal-content {
+    max-width: 85%;
+    max-height: 85%;
+    object-fit: contain;
+  }
+  .modal-close-button {
+    position: absolute;
+    top: 20px;
+    right: 35px;
+    color: #f1f1f1;
+    font-size: 50px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: color 0.3s ease;
+  }
+  .modal-close-button:hover {
+    color: #ff4669;
+  }
+</style>
+</head>
+<body>
+  <header>
+    <div class="logo">⚙ ZPC 2025</div>
+    <nav>
+      <a href="O-mne.html">O mně</a>
+      <a href="Semestrální projekt.html">Semestrální projekt</a>
+    </nav>
+  </header>
+
+  <main>
+    <div class="card">
+      <a href="Semestrální projekt.html" class="card-close-button">&times;</a> 
+    
+      <h1>⚙️ Iterace 1: Ověření konceptu (Proof of Concept)</h1>
+
+      <section class="project-section align-left">
+        <div class="text-block">
+          <h2>Úvod: Od teorie k fyzické realizaci</h2>
+          <p>Po návštěvě rehabilitačního oddělení jsem měl jasnou vizi, ale také definovanou sadu problémů, které stávající řešení trápí. Bylo načase přejít od teoretických úvah k fyzické realizaci. Cíl první iterace byl jasně stanoven: ověřit, zda je základní princip – motor táhající za lanko pro ohyb prstu – vůbec životaschopný. Jednalo se o klíčový "Proof of Concept".</p>
+        </div>
+        
+        <div class="image-block">
+          <img src="Celá sestava.jpg" alt="Celková testovací sestava" class="clickable-image">
+        </div>
+      </section>
+
+      <section class="project-section align-right">
+        <div class="text-block">
+          <h2>Sestavení: Svěráky, Arduino a dostupné materiály</h2>
+          <p>Pro zajištění maximální stability a opakovatelnosti testu vznikl prototyp v kontrolovaném dílenském prostředí. Sestava byla uchycena hned ve třech dílenských svěrákách:</p>
+          <ul>
+            <li>Jeden svěrák fixoval prototyp rukavice.</li>
+            <li>Druhý svěrák držel pohonnou jednotku: servo motor (model 11 kg/cm).</li>
+            <li>Třetí svěrák zajišťoval vodící trubičku (bowden), aby bylo možné efektivně přenášet tah.</li>
+          </ul>
+          <p>Řídicí jednotku ("mozek") tvořila deska Arduino, spojená s notebookem, kde běžel můj první testovací program.</p>
+          <p>Klíčovým prvkem pro rychlé prototypování byla samotná rukavice. Na standardní pracovní rukavici (kde mi neocenitelnou pomoc poskytla babička) byl přišit suchý zip. Na něj jsem následně mohl flexibilně umisťovat první 3D tištěné díly (navržené v Inventoru a tištěné na Prusa MK4), které sloužily jako vedení lanka. Jako lanko samotné posloužil první dostupný materiál s odpovídající pevností – struna z křovinořezu.</p>
+        </div>
+        
+        <div class="image-block">
+          <img src="servo ve svěráku.png" alt="Detail serva ve svěráku" class="clickable-image">
+        </div>
+      </section>
+
+      <section class="project-section-full">
+        <h2>Okamžik pravdy: První řízený pohyb</h2>
+        <p>Po několika hodinách ladění a propojování jsem spustil kód. A... koncept se potvrdil! Jak je vidět na videu, servo motor zabral, struna se napnula a prst na rukavici provedl řízený ohyb. Byl to klíčový moment, kdy se teoretická myšlenka poprvé přetavila ve fyzický pohyb. Cíl iterace – ověření konceptu – byl splněn.</p>
+        
+       <video
+  src="iterace1.mp4"
+  class="full-width-video"
+  poster="nahled-videa.jpg"
+  muted
+  autoplay
+  loop
+  playsinline>
+  Váš prohlížeč nepodporuje přehrávání videa.
+</video>
+
+      </section>
+
+      <section class="project-section-full">
+        <h2>Analýza zjištění (Co se (ne)povedlo)</h2>
+        <p>Samozřejmě, úspěch byl jen částečný. Smyslem první iterace je především identifikace problémů a "slepých uliček", a těch jsem našel dostatek.</p>
+      </section>
+
+      <section class="project-section align-left">
+        <div class="text-block">
+          <h3>1. Problém: Nevhodné uchycení lanka na servu</h3>
+          <p>Lanko jsem k páce serva uchytil provizorně pomocí dvou vrutů. To se ukázalo jako hlavní mechanický problém. Nešlo o prokluz, ale o to, že uchycení nebylo dostatečně tuhé. Struna se při tahu "šponovala" – mírně se posouvala a napínala – což v reálu efektivně zvětšovalo rameno páky. S větším ramenem pak dramaticky rostl potřebný krouticí moment (Moment = Síla × Rameno), který muselo servo vyvinout. Dostal se tak rychle na hranici svých možností.</p>
+        </div>
+        <div class="image-block">
+          <img src="Lano na motru.jpg" alt="Detail uchycení lanka na servu" class="clickable-image">
+        </div>
+      </section>
+
+      <section class="project-section-full">
+        <h3>2. Problém: Tuhost materiálu lanka</h3>
+        <p>Struna z křovinořezu se ukázala jako nevhodná. Její extrémní tuhost bránila plynulému ohybu v 3D tištěných vodících "kostičkách". Místo přenosu síly docházelo k obrovskému tření a tuhost struny navíc způsobovala nežádoucí síly, které se snažily stahovat rukavici z prstů.</p>
+        
+        <h3>3. Problém: Analýza výkonu serva</h3>
+        <p>Původní diagnóza zněla: "servo je slabé". Detailnější analýza ale ukázala, že problém není primárně v nedostatečném výkonu serva (11 kg/cm), ale v obrovských ztrátách způsobených třením (viz problém 2) a nevhodným uchycením (viz problém 1). Motor se zbytečně "nadřel" přetlačováním mých konstrukčních chyb.</p>
+      </section>
+
+      <section class="project-section align-right">
+        <div class="text-block">
+            <h3>4. Co překvapivě vydrželo?</h3>
+            <p>Naopak uchycení lanka na konci prstu pomocí tavné pistole, zamýšlené jako dočasné, drželo po celou dobu testování naprosto spolehlivě.</p>
+        </div>
+        <div class="image-block">
+          <img src="Uchycení na prstu.jpg" alt="Detail uchycení lanka na prstu" class="clickable-image">
+        </div>
+      </section>
+
+      <section class="project-section-full">
+        <h2>Plán pro Iteraci 2: Volná ruka</h2>
+        <p>Zjištění z této fáze jsou klíčová a definovala další postup. Plán pro "Iteraci 2" je jasný:</p>
+        <ul>
+          <li>Vyměnit strunu za profesionální, ohebný bowden s teflonovým jádrem, navržený pro minimální tření.</li>
+          <li>Na páku motoru integrovat otočný čep pro efektivní přenos síly a eliminaci nevhodného napínání lanka.</li>
+          <li>Způsob uchycení lanka na prstech změnit z lepení na nalisování s přesahem do 3D tištěných dílů pro vyšší spolehlivost.</li>
+          <li>A hlavně: prototyp rukavice opustí svěrák. Servo motor zůstane prozatím externě uchycený (mimo ruku), ale samotná ruka již nebude fixovaná. Cílem je otestovat systém, kdy se ruka může volněji pohybovat v prostoru.</li>
+        </ul>
+      </section>
+
+      </div> </main>
+
+  
+<div id="imageModal" class="modal-overlay">
+  <span class="modal-close-button">&times;</span>
+  <img class="modal-content" id="modalImageContent">
+</div>
+
+
+<script>
+  var modal = document.getElementById("imageModal");
+  var modalImg = document.getElementById("modalImageContent");
+  var span = document.getElementsByClassName("modal-close-button")[0];
+  var images = document.getElementsByClassName("clickable-image");
+
+  for (var i = 0; i < images.length; i++) {
+    images[i].onclick = function() {
+      modal.style.display = "flex";
+      modalImg.src = this.src;
+    }
+  }
+
+  span.onclick = function() {
+    modal.style.display = "none";
+  }
+
+  modal.onclick = function(event) {
+    if (event.target == modal) {
+      modal.style.display = "none";
+    }
+  }
+</script>
+
+</body>
+</html>

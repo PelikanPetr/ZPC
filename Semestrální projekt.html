@@ -51,123 +51,72 @@
     main {
       flex: 1;
       display: flex;
-      flex-direction: column; /* <-- karty pod sebou */
+      flex-direction: column;
       justify-content: flex-start;
       align-items: center;
       padding: 40px 20px;
-      gap: 30px; /* mezera mezi kartami */
+      gap: 30px;
+      position: relative; /* <-- ZMĚNA 1: Toto je teď rodič pro pozicování */
     }
 
     .card {
-  position: relative;
-  width: 100%;
-  max-width: 1500px;  /* Maximální šířka obsahu na stránce */
-  padding: 20px;        /* Vnitřní okraj, aby text nebyl nalepený na kraji */
-  overflow: auto;       /* Důležité, aby správně obalil plovoucí obrázek */
-  color: #dddddd;       /* Světlejší barva pro běžný text, aby byl čitelný */
-}
+      background: rgba(30, 20, 70, 0.8);
+      border: 1px solid rgba(255, 70, 105, 0.4);
+      border-radius: 12px;
+      padding: 30px 40px;
+      width: 100%;
+      max-width: 1000px;
+      text-align: center;
+      box-shadow: 0 0 15px rgba(255, 70, 105, 0.4);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
 
-/* Hover efekt už není potřeba, když je karta neviditelná, proto ho vypneme */
-.card:hover {
-  transform: none;
-  box-shadow: none;
-}
+    .card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 0 20px rgba(255, 70, 105, 0.7);
+    }
 
-/* --- VYLEPŠENÍ VZHLEDU TEXTU --- */
+    .card h2 {
+      margin-bottom: 10px;
+    }
 
-/* Hlavní nadpis projektu */
-.card h1 {
-  color: white;
-  text-align: center;
-  font-size: 38px;
-  font-weight: 900; /* Extra tučné písmo */
-  margin-bottom: 10px;
-  letter-spacing: 1px; /* Lehké mezery mezi písmeny pro lepší vzhled */
-}
+    .card p {
+      margin: 5px 0;
+      color: #ddd;
+    }
 
-/* Nadpisy sekcí (Motivace, Cíle, ...) */
-.card h2 {
-  color: white;
-  text-align: center;
-  font-size: 28px;
-  font-weight: 700; /* Tučné písmo */
-  margin-top: 50px;    /* Větší mezera NAD nadpisem pro jasné oddělení sekcí */
-  margin-bottom: 20px;
-  border-bottom: 2px solid #ff4669; /* Stylové podtržení místo staré čáry */
-  padding-bottom: 10px; /* Mezera mezi textem a podtržením */
-}
+    .card a {
+      display: inline-block;
+      margin-top: 10px;
+      color: #ff4669;
+      text-decoration: none;
+      font-weight: bold;
+    }
 
-/* Podnadpisy (Dílčí cíle) */
-.card h3 {
-    color: #dddddd;
-    font-size: 20px;
-    font-weight: 700;
-    margin-top: 30px;
-    margin-bottom: 15px;
-}
+    .card a:hover {
+      text-decoration: underline;
+    }
 
-/* Běžný text v odstavcích */
-.card p {
-  text-align: left;
-  line-height: 1.7;   /* Zvětšené řádkování pro mnohem lepší čitelnost */
-  font-size: 18px;
-  color: #c5c5c5;     /* Lehce tlumená bílá, aby text "nekřičel" */
-}
+    /* <-- ZMĚNA 2: Nový styl pro křížek */
+    .card-close-button {
+        position: absolute; /* Pozice vůči 'main' */
+        top: 40px;        /* Stejné odsazení jako padding 'main' */
+        right: 30px;       /* Odsazení zprava */
+        
+        color: #ffffff;
+        text-decoration: none;
+        font-size: 30px;
+        font-weight: bold;
+        line-height: 1;
+        z-index: 100;
+        cursor: pointer;
+        transition: color 0.3s ease;
+    }
 
-/* Stylování seznamů (odrážky) */
-.card ul {
-    list-style: none; /* Odstraní výchozí odrážky */
-    padding-left: 20px;
-}
+    .card-close-button:hover {
+        color: #ff4669; 
+    }
 
-.card li {
-    padding-left: 25px;
-    position: relative;
-    margin-bottom: 10px;
-    font-size: 18px;
-    color: #c5c5c5;
-}
-
-/* Vytvoření vlastní, barevné odrážky */
-.card li::before {
-    content: '■'; /* Můžeš zkusit i jiné symboly, např. '●' nebo '✔' */
-    position: absolute;
-    left: 0;
-    top: 0;
-    color: #ff4669; /* Barva odrážky, aby ladila s webem */
-    font-size: 14px;
-}
-
-/* Skryjeme původní čáru <hr>, protože H2 teď mají hezčí podtržení */
-.card hr {
-    display: none;
-}
-
-    .rukavice {
-  float: right;
-  margin-left: 30px;
-  margin-bottom: 15px;
-  width: 420px;        /* ZVĚTŠENO: Tuto hodnotu si můžeš libovolně měnit */
-  border-radius: 0;    /* ZRUŠENO ZAKULACENÍ: Toto zajistí ostré rohy */
-}
-.card-close-button {
-  position: absolute;      /* Umožní pozicování uvnitř .card kontejneru */
-  top: 0px;               /* Vzdálenost od horního okraje (můžeš si upravit) */
-  right: 0px;             /* Vzdálenost od pravého okraje (můžeš si upravit) */
-  
-  color: #ff4669;          /* Barva křížku */
-  font-size: 40px;         /* <-- VĚTŠÍ: Změněno z 32px na 40px */
-  font-weight: bold;       /* Tučnější */
-  text-decoration: none;   /* <-- BEZ ČÁRY: Odstraní podtržení odkazu */
-  line-height: 1;          /* Zajistí správnou velikost */
-  z-index: 10;             /* Aby byl křížek nad ostatním obsahem */
-  transition: color 0.2s ease, transform 0.2s ease; /* Plynulý přechod */
-}
-
-.card-close-button:hover {
-  color: white;                   /* Změní barvu při najetí myši */
-  transform: scale(1.1);          /* Lehce zvětší křížek při najetí */
-}
     /* Spodní lišta */
     footer {
       text-align: center;
@@ -178,68 +127,38 @@
   </style>
 </head>
 <body>
+
   <header>
     <div class="logo">⚙ ZPC 2025</div>
     <nav>
       <a href="O-mne.html">O mně</a>
       <a href="Semestrální projekt.html">Semestrální projekt</a>
-        </nav>
+    </nav>
   </header>
 
   <main>
-    <div class="card">
-       <a href="index.html" class="card-close-button">&times;</a> 
-     <img src="rukavice.webp" alt="rukavice" class="rukavice">
- 
-
-    <h1>Multifunkční rehabilitační rukavice</h1>
-
-    <p style="text-align: center;">
-        <strong>Vedoucí práce:</strong> <br>
-        <strong>Řešitel:</strong> Petr Pelikán
-    </p>
-
-    <hr>
-
-    <h2>Motivace a současný stav</h2>
-    <p>
-        Rehabilitace motorických funkcí ruky je klíčová pro pacienty po cévních mozkových příhodách, úrazech nebo s různými neurologickými poruchami. K tomuto účelu se stále častěji využívají robotické rukavice, které pacientům pomáhají s pasivním i aktivním cvičením prstů. Analýza trhu ukazuje, že naprostá většina dostupných řešení je striktně jednoúčelová – existuje varianta pro levou a varianta pro pravou ruku. Tento přístup vytváří zbytečnou finanční a logistickou zátěž pro zdravotnická zařízení i pro pacienty v domácí péči, kteří musí v případě potřeby zakoupit dvě samostatná zařízení.
-    </p>
-
-    <h2>Cíle projektu</h2>
-    <p>
-        Hlavním cílem tohoto semestrálního projektu je navrhnout a realizovat funkční prototyp rehabilitační rukavice, která eliminuje výše zmíněný nedostatek.
-    </p>
+    <a href="index.html" class="card-close-button">&times;</a> 
     
-    <h3>Dílčí cíle jsou:</h3>
-    <ul>
-        <li>Navrhnout mechanickou konstrukci rukavice, která bude symetrická a snadno přizpůsobitelná pro levou i pravou ruku.</li>
-        <li>Integrovat ovládací elektroniku (mikrokontrolér) a pohonné jednotky (např. servomotory nebo lineární aktuátory) pro pohyb jednotlivých prstů.</li>
-        <li>Vytvořit základní řídicí software, který umožní spouštět předdefinované rehabilitační sekvence (např. sevření v pěst, postupný ohyb prstů).</li>
-        <li>Sestavit a otestovat funkčnost prototypu.</li>
-    </ul>
-
-    <h2>Popis navrhovaného řešení</h2>
-    <p>
-        Projekt se zaměřuje na vytvoření modulární a univerzální konstrukce. Základem bude nosná část (textilní rukavice nebo 3D tištěný skelet), na kterou budou připevněny ovládací mechanismy. Univerzálnosti bude dosaženo symetrickým designem, kde bude možné jednoduše přemontovat klíčový prvek z jedné strany na druhou.
-    </p>
-    <p>
-        Řízení zajistí mikrokontrolérová deska, která bude ovládat aktuátory pro každý prst. Prototyp bude napájen z externího zdroje nebo baterie a bude vybaven jednoduchým uživatelským rozhraním. Velká část mechanických dílů bude vyrobena technologií 3D tisku pro rychlou iteraci a nízké náklady.
-    </p>
-
-    <h2>Očekávané výsledky</h2>
-    <ul>
-        <li>Funkční prototyp univerzální rehabilitační rukavice.</li>
-        <li>Technická dokumentace (3D modely, schéma zapojení).</li>
-        <li>Řídicí program pro mikrokontrolér.</li>
-        <li>Závěrečná zpráva shrnující postup práce a dosažené výsledky na tomto webu.</li>
-    </ul>
-
-
-      
+    <div class="card">
+      <h2>Zadání</h2>
+      <p>24.9.2025</p>
+      <a href="Semestrální projekt zadání.html">ČÍST DÁLE →</a>
+    </div>
+    <div class="card">
+      <h2>Návštěva nemocnice</h2>
+      <p>10.10.2025</p>
+      <a href="Návštěva nemocnice.html">ČÍST DÁLE →</a>
+    </div>
+    <div class="card">
+      <h2>1. iterace</h2>
+      <p>7.11.2025</p>
+      <a href="1iterace.html">ČÍST DÁLE →</a>
     </div>
   </main>
 
+  <footer>
+      © ZPC 2025
+  </footer>
 
 </body>
 </html>
