@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Projekt: Iterace 1</title>
+<style>
+  /* Základní reset */
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+  }
+
+  body {
+    background: linear-gradient(to bottom, #0a0f2c, #0047ab);
+    color: white;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+  }
+
+  /* Horní lišta */
+  header {
+    background: #1a1040;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 30px;
+    font-size: 18px;
+  }
+
+  header .logo {
+    font-weight: bold;
+    color: #ff4669;
+  }
+
+  header nav a {
+    color: white;
+    text-decoration: none;
+    margin-left: 20px;
+    transition: color 0.3s ease;
+  }
+
+  header nav a:hover {
+    color: #ff4669;
+  }
+
+  /* Centrální obsah */
+  main {
+    flex: 1;
+    display: flex;
+    flex-direction: column; /* <-- karty pod sebou */
+    justify-content: flex-start;
+    align-items: center;
+    padding: 40px 20px;
+    gap: 30px; /* mezera mezi kartami */
+  }
+
+  .card {
+    position: relative;
+    width: 100%;
+    max-width: 1000px;  /* Maximální šířka obsahu na stránce */
+    padding: 20px;      /* Vnitřní okraj, aby text nebyl nalepený na kraji */
+    overflow: auto;     /* Důležité, aby správně obalil plovoucí obrázek */
+    color: #dddddd;     /* Světlejší barva pro běžný text, aby byl čitelný */
+  }
+
+  .card:hover {
+    transform: none;
+    box-shadow: none;
+  }
+
+  /* --- VYLEPŠENÍ VZHLEDU TEXTU --- */
+
+  .card h1 {
+    color: white;
+    text-align: center;
+    font-size: 38px;
+    font-weight: 900;
+    margin-bottom: 25px; /* Větší mezera pod hlavním titulkem */
+    letter-spacing: 1px;
+  }
+
+  .card h2 {
+    color: white;
+    text-align: left; /* Zarovnání doleva */
+    font-size: 28px;
+    font-weight: 700;
+    margin-top: 20px; /* Snížení horní mezery */
+    margin-bottom: 20px;
+    border-bottom: 2px solid #ff4669;
+    padding-bottom: 10px;
+  }
+
+  .card h3 {
+    color: #dddddd;
+    font-size: 20px;
+    font-weight: 700;
+    margin-top: 30px;
+    margin-bottom: 15px;
+  }
+
+  .card p {
+    text-align: left;
+    line-height: 1.7;
+    font-size: 18px;
+    color: #c5c5c5;
+    margin-bottom: 15px; /* Přidána mezera mezi odstavci */
+  }
+
+  .card ul {
+    list-style: none;
+    padding-left: 20px;
+  }
+
+  .card li {
+    padding-left: 25px;
+    position: relative;
+    margin-bottom: 10px;
+    font-size: 18px;
+    color: #c5c5c5;
+  }
+
+  .card li::before {
+    content: '■';
+    position: absolute;
+    left: 0;
+    top: 0;
+    color: #ff4669;
+    font-size: 14px;
+  }
+
+  .card hr {
+    display: none;
+  }
+
+  /* Toto je ze starého kódu, teď se nepoužívá díky .project-section */
+  .Visual {
+    display: none;
+  }
+  
+  .card-close-button {
+    position: absolute;
+    top: 0px;
+    right: 0px;
+    color: #ff4669;
+    font-size: 40px;
+    font-weight: bold;
+    text-decoration: none;
+    line-height: 1;
+    z-index: 10;
+    transition: color 0.2s ease, transform 0.2s ease;
+  }
+
+  .card-close-button:hover {
+    color: white;
+    transform: scale(1.1);
+  }
+  
+  /* Spodní lišta */
+  footer {
+    text-align: center;
+    padding: 10px;
+    font-size: 14px;
+    background: #1a1040;
+  }
+
+  /* --- KÓD PRO LAYOUT (OPRAVENO UMÍSTĚNÍ) --- */
+  .project-section {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    margin-top: 30px;
+    margin-bottom: 30px;
+    gap: 30px;
+  }
+  .project-section .text-block,
+  .project-section .image-block {
+    flex: 1;
+    min-width: 300px;
+  }
+  .project-section.align-left .text-block { order: 1; }
+  .project-section.align-left .image-block { order: 2; }
+  .project-section.align-right .text-block { order: 2; }
+  .project-section.align-right .image-block { order: 1; }
+  
+  .project-section img,
+  .project-section video { /* Přidáno video */
+    width: 100%;
+    height: auto;
+    border-radius: 8px;
+  }
+  
+  /* Přidáno pro plnou šířku */
+  .project-section-full {
+      margin-top: 30px;
+  }
+  
+  .full-width-image,
+  .full-width-video { /* Přidáno video */
+    width: 100%;
+    height: auto;
+    border-radius: 8px;
+    margin-top: 30px;
+  }
+
+  /* --- KÓD PRO MODÁL (LIGHTBOX) --- */
+  .clickable-image {
+    cursor: pointer;
+    transition: transform 0.2s ease;
+  }
+  .clickable-image:hover {
+    transform: scale(1.03);
+  }
+  .modal-overlay {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.85);
+    justify-content: center;
+    align-items: center;
+  }
+  .modal-content {
+    max-width: 85%;
+    max-height: 85%;
+    object-fit: contain;
+  }
+  .modal-close-button {
+    position: absolute;
+    top: 20px;
+    right: 35px;
+    color: #f1f1f1;
+    font-size: 50px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: color 0.3s ease;
+  }
+  .modal-close-button:hover {
+    color: #ff4669;
+  }
+</style>
+</head>
+<body>
+  <header>
+    <div class="logo">⚙ ZPC 2025</div>
+    <nav>
+      <a href="O-mne.html">O mně</a>
+      <a href="Semestrální projekt.html">Semestrální projekt</a>
+    </nav>
+  </header>
+
+  <main>
+    <div class="card">
+      <a href="Semestrální projekt.html" class="card-close-button">&times;</a> 
+    
+      <h1>⚙️ Iterace 2: Volná ruka (Free Hand)</h1>
+
+      <section class="project-section align-left">
+        <div class="text-block">
+          <h2>Úvod: Osvobození ze svěráku</h2>
+          <p>Zatímco v první iteraci byla ruka "uvězněná" ve svěráku, cílem druhé fáze bylo oddělit pohon od samotné rukavice. Plán byl jasný: vytvořit externí pohonnou jednotku a sílu přenášet na dálku. Tím bych získal možnost s rukavicí volně hýbat v prostoru, což je pro budoucí rehabilitaci klíčové. Zároveň jsem chtěl vyřešit problémy s páčením serva pomocí nového, 3D tištěného mechanismu.</p>
+        </div>
+        
+        <div class="image-block">
+          <img src="2servo.jpg" alt="Nová pohonná jednotka s bowdenem" class="clickable-image">
+        </div>
+      </section>
+
+      <section class="project-section align-right">
+        <div class="text-block">
+          <h2>Sestavení: Bowden, Arduino a "Plovoucí" ruka</h2>
+          <p>Pro zajištění přenosu síly jsem zvolil profesionální řešení z cyklistiky:</p>
+          <ul>
+            <li>Přenos síly: Ocelové lanko z brzdy kola vedené v bowdenu s teflonovou vložkou pro minimalizaci tření.</li>
+            <li>Pohonná jednotka: Servo motor (uchycený ve svěráku) dostal na míru navržené 3D tištěné šasi. Páka serva byla přepracována – nyní využívá otočný čep, ve kterém je lanko fixováno svěrným spojem. To umožňuje lanku zůstat v ose i při rotaci páky.</li>
+            <li>Rukavice: Bowden ústí do 3D tištěného "domečku" (žlutý díl) nalisovaného s přesahem. Vodící segmenty jsou k textilu přilepeny.</li>
+          </ul>
+        </div>
+        
+        <div class="image-block">
+          <img src="2rukavice.jpg" alt="Detail 3D tištěného mechanismu páky" class="clickable-image">
+        </div>
+      </section>
+
+      <section class="project-section-full">
+        <h2>Okamžik pravdy: Plynulejší, ale náročný pohyb</h2>
+        <p>Po spuštění kódu byl posun okamžitě vidět. Pohyb je výrazně plynulejší a čistší než v první iteraci. Video ukazuje, že systém funguje a dokáže prst ohýbat. Důležité zjištění z pohledu uživatele (ergonomie): Pohyb je bezbolestný. Tlak vyvíjený mechanismem na prst je přirozený, což je skvělá zpráva pro bezpečnost.</p>
+    <video 
+  src="Iterace 2.mp4" 
+  muted 
+  autoplay 
+  loop 
+  playsinline
+  style="width: 50%; height: auto; display: block; margin: 0 auto; pointer-events: none;">
+</video>
+      </section>
+
+      <section class="project-section-full">
+        <h2>Analýza zjištění (Co se (ne)povedlo)</h2>
+        <p>Stejně jako v první iteraci, i zde fyzika a mechanika odhalily slabá místa mého návrhu.</p>
+      </section>
+
+      <section class="project-section align-left">
+        <div class="text-block">
+          <h3>1. Problém: Nedostatečná síla serva</h3>
+          <p>Toto se ukázalo jako hlavní limitující faktor. Použité servo s tahem 11 kg/cm je pro tento účel zkrátka slabé. Kombinace odporu tuhého lanka, tření a odporu rukavice vyžaduje mnohem vyšší krouticí moment, než jaký dokáže tento motor vyvinout.</p>
+
+          <h3>2. Problém: Fyzika "tlačení" lankem (Vzpěr)</h3>
+          <p>Můj systém funguje tak, že pro ohyb prstu do dlaně musí servo lankem zatlačit. Jakmile ale lanko opustí bezpečí bowdenu (mezi motorem a vstupem do trubičky), chová se jako dlouhý prut namáhaný na tlak. Dochází ke ztrátě vzpěrné stability (buckling) – lanko se chce vyboulovat do strany, místo aby přenášelo sílu.</p>
+        </div> 
+      </section>
+      <section class="project-section-full">
+        <h3>3. Problém: Tuhost brzdového lanka</h3>
+        <p>Abych čelil výše zmíněnému vzpěru, použil jsem tlusté brzdové lanko. To se ale ukázalo jako příliš tuhé. Systém má kvůli tomu velký vnitřní odpor, lanko se nechce poddat ohybům rukavice a už tak slabé servo s ním musí zbytečně bojovat.</p>
+        
+        <h3>4. Problém: Krčení materiálu rukavice</h3>
+        <p>Flexibilní základna na suchém zipu se ukázala jako dvojsečná zbraň. Při tahu/tlaku se celá látková konstrukce "krčí" a shrnuje k sobě, místo aby čistě ohýbala prst.</p>
+
+        <h3>5. Problém: Destrukce vodících dílů</h3>
+        <p>Síly v systému jsou větší, než se zdálo. Zatímco žlutý "domeček" bowdenu zátěž vydržel, nejslabším článkem se ukázala poslední bílá vodící kostička přímo před ním. Nevydržela tlak a kombinaci sil, což vedlo k jejímu prasknutí.</p>
+      </section>
+
+      <section class="project-section-full">
+        <h2>Plán pro Iteraci 3: Translační pohyb a hrubá síla</h2>
+        <p>Zjištění z druhé iterace definují jasný směr pro další vývoj. Musím radikálně navýšit výkon a změnit mechaniku pohybu.</p>
+        <ul>
+          <li>Upgrade motoru: Stávající pohon je nedostatečný. Nahradím jej výrazně silnějším servem s krouticím momentem 35 kg/cm, které si s odporem rukavice hravě poradí.</li>
+          <li>Nasazení 4-kloubového mechanismu: Zásadní změna konstrukce. Rotační pohyb serva bude pomocí mechaniky převeden na čistě lineární (translační) pohyb. Tím eliminuji problém s bortícím se lankem u motoru.</li>
+          <li>Výměna lanka: Přechod na tenčí a ohebnější lanko z cyklistické přehazovačky pro snížení tuhosti systému.</li>
+          <li>Úprava rukavice: Rozdělení vodících kostiček na samostatné segmenty suchého zipu, aby se zamezilo krčení látky.</li>
+        </ul>
+      </section>
+
+    </div> 
+</main>
+
+  
+<div id="imageModal" class="modal-overlay">
+  <span class="modal-close-button">&times;</span>
+  <img class="modal-content" id="modalImageContent">
+</div>
+
+
+<script>
+  var modal = document.getElementById("imageModal");
+  var modalImg = document.getElementById("modalImageContent");
+  var span = document.getElementsByClassName("modal-close-button")[0];
+  var images = document.getElementsByClassName("clickable-image");
+
+  for (var i = 0; i < images.length; i++) {
+    images[i].onclick = function() {
+      modal.style.display = "flex";
+      modalImg.src = this.src;
+    }
+  }
+
+  span.onclick = function() {
+    modal.style.display = "none";
+  }
+
+  modal.onclick = function(event) {
+    if (event.target == modal) {
+      modal.style.display = "none";
+    }
+  }
+</script>
+
+</body>
+</html>
