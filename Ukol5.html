@@ -321,6 +321,101 @@
   Tvůj prohlížeč nepodporuje přehrávání videa.
 </video>
 </section>
+<div style="
+    font-family: 'Consolas', 'Monaco', 'Courier New', monospace;
+    background-color: #1e1e1e;
+    color: #d4d4d4;
+    border-radius: 8px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+    overflow: hidden;
+    width: 100%;
+    max-width: 800px;
+    margin: 20px auto;
+    border: 1px solid #333;
+">
+    <div style="background-color: #252526; padding: 10px 15px; border-bottom: 1px solid #333; display: flex; align-items: center;">
+        <div style="width: 12px; height: 12px; background-color: #ff5f56; border-radius: 50%; margin-right: 8px;"></div>
+        <div style="width: 12px; height: 12px; background-color: #ffbd2e; border-radius: 50%; margin-right: 8px;"></div>
+        <div style="width: 12px; height: 12px; background-color: #27c93f; border-radius: 50%;"></div>
+        <span style="margin-left: 15px; font-size: 12px; color: #888;">arduino_projekt.ino</span>
+    </div>
+
+    <div style="padding: 20px; overflow-x: auto;">
+        <pre style="margin: 0; line-height: 1.5;"><code style="font-size: 14px;">
+<span style="color: #569cd6;">const</span> <span style="color: #569cd6;">int</span> trigPin = <span style="color: #b5cea8;">11</span>;
+<span style="color: #569cd6;">const</span> <span style="color: #569cd6;">int</span> echoPin = <span style="color: #b5cea8;">12</span>;
+<span style="color: #569cd6;">const</span> <span style="color: #569cd6;">int</span> LED_ZELENA = <span style="color: #b5cea8;">2</span>;
+<span style="color: #569cd6;">const</span> <span style="color: #569cd6;">int</span> LED_ZLUTA = <span style="color: #b5cea8;">3</span>;
+<span style="color: #569cd6;">const</span> <span style="color: #569cd6;">int</span> LED_CERVENA = <span style="color: #b5cea8;">4</span>;
+
+<span style="color: #569cd6;">unsigned long</span> t_ms;
+<span style="color: #569cd6;">long</span> duration;
+<span style="color: #569cd6;">int</span> distance;
+<span style="color: #569cd6;">bool</span> auto_je_u_semaforu = <span style="color: #569cd6;">false</span>;
+
+<span style="color: #569cd6;">void</span> <span style="color: #dcdcaa;">setup</span>() {
+  <span style="color: #dcdcaa;">pinMode</span>(trigPin, <span style="color: #569cd6;">OUTPUT</span>);
+  <span style="color: #dcdcaa;">pinMode</span>(echoPin, <span style="color: #569cd6;">INPUT</span>);
+  <span style="color: #dcdcaa;">pinMode</span>(LED_ZELENA, <span style="color: #569cd6;">OUTPUT</span>);
+  <span style="color: #dcdcaa;">pinMode</span>(LED_ZLUTA, <span style="color: #569cd6;">OUTPUT</span>);
+  <span style="color: #dcdcaa;">pinMode</span>(LED_CERVENA, <span style="color: #569cd6;">OUTPUT</span>);
+  <span style="color: #4ec9b0;">Serial</span>.<span style="color: #dcdcaa;">begin</span>(<span style="color: #b5cea8;">9600</span>);
+}
+
+<span style="color: #569cd6;">void</span> <span style="color: #dcdcaa;">loop</span>() {
+  t_ms = <span style="color: #dcdcaa;">millis</span>();
+
+  <span style="color: #dcdcaa;">digitalWrite</span>(trigPin, <span style="color: #569cd6;">LOW</span>);
+  <span style="color: #dcdcaa;">delayMicroseconds</span>(<span style="color: #b5cea8;">2</span>);
+  <span style="color: #dcdcaa;">digitalWrite</span>(trigPin, <span style="color: #569cd6;">HIGH</span>);
+  <span style="color: #dcdcaa;">delayMicroseconds</span>(<span style="color: #b5cea8;">10</span>);
+  <span style="color: #dcdcaa;">digitalWrite</span>(trigPin, <span style="color: #569cd6;">LOW</span>);
+
+  duration = <span style="color: #dcdcaa;">pulseIn</span>(echoPin, <span style="color: #569cd6;">HIGH</span>);
+  distance = duration * <span style="color: #b5cea8;">0.034</span> / <span style="color: #b5cea8;">2</span>;
+
+  <span style="color: #c586c0;">if</span> (distance &gt; <span style="color: #b5cea8;">0</span> && distance &lt; <span style="color: #b5cea8;">15</span>) {
+    <span style="color: #c586c0;">if</span> (auto_je_u_semaforu == <span style="color: #569cd6;">false</span>) {
+      <span style="color: #dcdcaa;">digitalWrite</span>(LED_ZELENA, <span style="color: #569cd6;">LOW</span>);
+      <span style="color: #dcdcaa;">digitalWrite</span>(LED_ZLUTA, <span style="color: #569cd6;">HIGH</span>);
+      <span style="color: #dcdcaa;">digitalWrite</span>(LED_CERVENA, <span style="color: #569cd6;">LOW</span>);
+      <span style="color: #dcdcaa;">delay</span>(<span style="color: #b5cea8;">2000</span>);
+
+      <span style="color: #dcdcaa;">digitalWrite</span>(LED_ZLUTA, <span style="color: #569cd6;">LOW</span>);
+      <span style="color: #dcdcaa;">digitalWrite</span>(LED_CERVENA, <span style="color: #569cd6;">HIGH</span>);
+      <span style="color: #dcdcaa;">delay</span>(<span style="color: #b5cea8;">5000</span>);
+
+      <span style="color: #dcdcaa;">digitalWrite</span>(LED_ZLUTA, <span style="color: #569cd6;">HIGH</span>);
+      <span style="color: #dcdcaa;">delay</span>(<span style="color: #b5cea8;">1500</span>);
+
+      <span style="color: #dcdcaa;">digitalWrite</span>(LED_CERVENA, <span style="color: #569cd6;">LOW</span>);
+      <span style="color: #dcdcaa;">digitalWrite</span>(LED_ZLUTA, <span style="color: #569cd6;">LOW</span>);
+      <span style="color: #dcdcaa;">digitalWrite</span>(LED_ZELENA, <span style="color: #569cd6;">HIGH</span>);
+      
+      auto_je_u_semaforu = <span style="color: #569cd6;">true</span>;
+    }
+  } 
+  <span style="color: #c586c0;">else</span> {
+    auto_je_u_semaforu = <span style="color: #569cd6;">false</span>;
+    
+    <span style="color: #dcdcaa;">digitalWrite</span>(LED_ZELENA, <span style="color: #569cd6;">LOW</span>);
+    <span style="color: #dcdcaa;">digitalWrite</span>(LED_CERVENA, <span style="color: #569cd6;">LOW</span>);
+
+    <span style="color: #c586c0;">if</span> (t_ms % <span style="color: #b5cea8;">1000</span> &lt; <span style="color: #b5cea8;">500</span>) {
+      <span style="color: #dcdcaa;">digitalWrite</span>(LED_ZLUTA, <span style="color: #569cd6;">HIGH</span>);
+    } <span style="color: #c586c0;">else</span> {
+      <span style="color: #dcdcaa;">digitalWrite</span>(LED_ZLUTA, <span style="color: #569cd6;">LOW</span>);
+    }
+  }
+}
+        </code></pre>
+    
+</div>
+    
+    </div>
+    <div class="image-block">
+    <img src="zapojení internet.png" alt="Detail připojené desky Arduino Uno" class="clickable-image">
+  </div>
     </div>
   </main>
 
