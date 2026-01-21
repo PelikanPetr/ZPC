@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Projekt: Iterace 3</title>
+<style>
+  /* Základní reset */
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+  }
+
+  body {
+    background: linear-gradient(to bottom, #0a0f2c, #0047ab);
+    color: white;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+  }
+
+  /* Horní lišta */
+  header {
+    background: #1a1040;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 30px;
+    font-size: 18px;
+  }
+
+  header .logo {
+    font-weight: bold;
+    color: #ff4669;
+  }
+
+  header nav a {
+    color: white;
+    text-decoration: none;
+    margin-left: 20px;
+    transition: color 0.3s ease;
+  }
+
+  header nav a:hover {
+    color: #ff4669;
+  }
+
+  /* Centrální obsah */
+  main {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    padding: 40px 20px;
+    gap: 30px;
+  }
+
+  .card {
+    position: relative;
+    width: 100%;
+    max-width: 1000px;
+    padding: 20px;
+    overflow: auto;
+    color: #dddddd;
+  }
+
+  .card:hover {
+    transform: none;
+    box-shadow: none;
+  }
+
+  /* --- VYLEPŠENÍ VZHLEDU TEXTU --- */
+
+  .card h1 {
+    color: white;
+    text-align: center;
+    font-size: 38px;
+    font-weight: 900;
+    margin-bottom: 25px;
+    letter-spacing: 1px;
+  }
+
+  .card h2 {
+    color: white;
+    text-align: left;
+    font-size: 28px;
+    font-weight: 700;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    border-bottom: 2px solid #ff4669;
+    padding-bottom: 10px;
+  }
+
+  .card h3 {
+    color: #dddddd;
+    font-size: 20px;
+    font-weight: 700;
+    margin-top: 30px;
+    margin-bottom: 15px;
+  }
+
+  .card p {
+    text-align: left;
+    line-height: 1.7;
+    font-size: 18px;
+    color: #c5c5c5;
+    margin-bottom: 15px;
+  }
+
+  .card ul {
+    list-style: none;
+    padding-left: 20px;
+  }
+
+  .card li {
+    padding-left: 25px;
+    position: relative;
+    margin-bottom: 10px;
+    font-size: 18px;
+    color: #c5c5c5;
+  }
+
+  .card li::before {
+    content: '■';
+    position: absolute;
+    left: 0;
+    top: 0;
+    color: #ff4669;
+    font-size: 14px;
+  }
+
+  .card hr {
+    display: none;
+  }
+
+  .card-close-button {
+    position: absolute;
+    top: 0px;
+    right: 0px;
+    color: #ff4669;
+    font-size: 40px;
+    font-weight: bold;
+    text-decoration: none;
+    line-height: 1;
+    z-index: 10;
+    transition: color 0.2s ease, transform 0.2s ease;
+  }
+
+  .card-close-button:hover {
+    color: white;
+    transform: scale(1.1);
+  }
+  
+  /* Spodní lišta */
+  footer {
+    text-align: center;
+    padding: 10px;
+    font-size: 14px;
+    background: #1a1040;
+  }
+
+  /* --- KÓD PRO LAYOUT --- */
+  .project-section {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    margin-top: 30px;
+    margin-bottom: 30px;
+    gap: 30px;
+  }
+  .project-section .text-block,
+  .project-section .image-block {
+    flex: 1;
+    min-width: 300px;
+  }
+  .project-section.align-left .text-block { order: 1; }
+  .project-section.align-left .image-block { order: 2; }
+  .project-section.align-right .text-block { order: 2; }
+  .project-section.align-right .image-block { order: 1; }
+  
+  .project-section img,
+  .project-section video {
+    width: 100%;
+    height: auto;
+    border-radius: 8px;
+  }
+  
+  .project-section-full {
+      margin-top: 30px;
+  }
+  
+  .full-width-image,
+  .full-width-video {
+    width: 100%;
+    height: auto;
+    border-radius: 8px;
+    margin-top: 30px;
+  }
+
+  /* --- KÓD PRO MODÁL --- */
+  .clickable-image {
+    cursor: pointer;
+    transition: transform 0.2s ease;
+  }
+  .clickable-image:hover {
+    transform: scale(1.03);
+  }
+  .modal-overlay {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.85);
+    justify-content: center;
+    align-items: center;
+  }
+  .modal-content {
+    max-width: 85%;
+    max-height: 85%;
+    object-fit: contain;
+  }
+  .modal-close-button {
+    position: absolute;
+    top: 20px;
+    right: 35px;
+    color: #f1f1f1;
+    font-size: 50px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: color 0.3s ease;
+  }
+  .modal-close-button:hover {
+    color: #ff4669;
+  }
+</style>
+</head>
+<body>
+  <header>
+    <div class="logo">⚙ ZPC 2025</div>
+    <nav>
+      <a href="O-mne.html">O mně</a>
+      <a href="Semestrální projekt.html">Semestrální projekt</a>
+    </nav>
+  </header>
+
+  <main>
+    <div class="card">
+      <a href="Semestrální projekt.html" class="card-close-button">&times;</a> 
+    
+      <h1>⚙️ Iterace 3: Implementace lineárního vedení a geometrické limity</h1>
+
+      <section class="project-section align-left">
+        <div class="text-block">
+          <h2>Technické východisko a konstrukce</h2>
+          <p>Analýza druhé iterace identifikovala jako kritický bod selhání přímý rotační náhon lanka, který v kombinaci s nedostatečným krouticím momentem vedl k jevu zvanému <strong>vzpěrná nestabilita (buckling)</strong>. Lanko se při tlaku deformovalo mimo osu dříve, než došlo k přenosu síly. Cílem této fáze proto byla změna kinematiky pohonu na translační.</p>
+          <p>Pro zajištění čistě axiálního zatížení lanka byl navržen <strong>Slider-crank mechanismus</strong>:</p>
+          <ul>
+            <li><strong>Pohon:</strong> Instalováno digitální servo s tahem <strong>35 kg/cm</strong> (trojnásobný nárůst výkonu).</li>
+            <li><strong>Mechanika:</strong> Rotační pohyb serva je přes táhlo přenášen na 3D tištěný jezdec (slider) vedený v kolejnici. Vše tištěno z PLA.</li>
+            <li><strong>Fixace:</strong> Lanko je v jezdci fixováno mechanickým svěrným spojem, což zcela eliminovalo vzpěr.</li>
+          </ul>
+        </div>
+        
+        <div class="image-block">
+          <img src="3 iterace stroj.jpg" alt="Detail lineárního slider mechanismu" class="clickable-image">
+        </div>
+      </section>
+
+      <section class="project-section align-right">
+        <div class="text-block">
+          <h2>Optimalizace koncového efektoru (Rukavice)</h2>
+          <p>V rámci testování byla ověřována hypotéza, že segmentace vodícího pásu suchého zipu na samostatné oddíly sníží odpor při ohybu.</p>
+          <p><strong>Výsledek experimentu:</strong> Toto řešení se v praxi neosvědčilo. Při zátahu docházelo k deformaci segmentů, které se k sobě "balily" a narušovaly trajektorii. Konstrukce se proto vrátila k celistvému pásu suchého zipu. Pro snížení tuhosti systému bylo původní brzdové lanko nahrazeno flexibilnějším lankem z cyklistické přehazovačky, což vedlo ke zlepšení odezvy.</p>
+        </div>
+        
+        <div class="image-block">
+          <img src="3rukavice.jpg" alt="Testování rukavice s novým lankem" class="clickable-image">
+        </div>
+      </section>
+
+      
+
+      <section class="project-section-full">
+        <h2>Analýza dat (Co odhalilo testování)</h2>
+        <p>Po sestavení a zátěžovém testu byly vyvozeny následující inženýrské závěry:</p>
+      </section>
+
+      <section class="project-section align-left">
+        <div class="text-block">
+          <h3>✅ Kinematika (Vyřešeno)</h3>
+          <p>Změna na lineární vedení úspěšně eliminovala vzpěr (buckling). Lanko je namáháno čistě v ose a k vybočování u motoru již nedocházelo. Chod mechanismu je plynulejší a akustický projev výrazně nižší.</p>
+
+          <h3>⚠️ Prokluzování páky (Slipping)</h3>
+          <p>Vysoký krouticí moment serva (35 kg/cm) odhalil slabinu v napojení 3D tištěných dílů. Spojení mezi kovovou hřídelí motoru a tištěnou pákou (bílá packa) nevydrželo zátěž a docházelo k protáčení na tisícihranu. Prosté nasunutí plastu na kov se ukázalo jako nedostatečné.</p>
+
+          <h3>⚠️ Mechanické příčení (Jamming)</h3>
+          <p>Dalším problémem se ukázala vůle mezi jezdcem a kolejnicí. Při tlaku se slider v drážce mírně natočí, což vede k jeho vzpříčení (zaseknutí) o stěny vedení. Tento mechanický odpor musí servo neustále překonávat.</p>
+          
+          <h3>❌ Geometrie a zdvih (Limitace)</h3>
+          <p>Ačkoliv je pohyb funkční, nepodařilo se dosáhnout plné flexe prstu. Analýza odhalila, že limitujícím faktorem není síla motoru, ale <strong>nedostatečná délka zdvihu (stroke length)</strong>. Geometrie mechanismu neumožnila navinout dostatečnou délku lanka pro kompletní uzavření ruky.</p>
+        </div> 
+      </section>
+
+      <section class="project-section-full">
+        <h2>Definice cílů pro Iteraci 4 (Plán vývoje)</h2>
+        <p>Na základě limitací zjištěných ve třetí fázi byl stanoven plán pro finální konstrukci, zaměřený na odstranění příčení, škálování systému a integraci elektroniky.</p>
+        <ul>
+          <li><strong>Redesign uchycení páky (Svěrný spoj):</strong> Změna tvaru páky serva. Nový design bude obsahovat stahovací šroub, který páku pevně zafixuje k hřídeli motoru, aby se zabránilo jejímu protáčení.</li>
+          <li><strong>Redesign lineárního vedení:</strong> Změna profilu vodící drážky (např. T-drážka) pro vymezení vůlí a eliminaci křížení jezdce.</li>
+          <li><strong>Optimalizace zdvihu:</strong> Přepočítání geometrie pák pro prodloužení pracovní dráhy jezdce, aby bylo dosaženo plného rozsahu pohybu (Full ROM).</li>
+          <li><strong>Škálování na 5 prstů (Full Hand):</strong> Miniaturizace a umístění 5 jednotek vedle sebe.</li>
+          <li><strong>Modularita a HMI:</strong> Univerzální konstrukce (L/P ruka), displej a bezpečnostní prvky.</li>
+        </ul>
+      </section>
+
+      <section class="project-section-full" style="text-align: center; margin-bottom: 20px;">
+        <h2 style="text-align: center;">Vizuální shrnutí (Visual Summary)</h2>
+        <video 
+          src="3 iterace video.mp4" 
+          muted 
+          autoplay 
+          loop 
+          playsinline
+          style="width: 100%; max-width: 450px; border-radius: 8px; box-shadow: 0 4px 15px rgba(0,0,0,0.5); pointer-events: none;">
+        </video>
+      </section>
+
+    </div> 
+  </main>
+
+  
+<div id="imageModal" class="modal-overlay">
+  <span class="modal-close-button">&times;</span>
+  <img class="modal-content" id="modalImageContent">
+</div>
+
+
+<script>
+  var modal = document.getElementById("imageModal");
+  var modalImg = document.getElementById("modalImageContent");
+  var span = document.getElementsByClassName("modal-close-button")[0];
+  var images = document.getElementsByClassName("clickable-image");
+
+  for (var i = 0; i < images.length; i++) {
+    images[i].onclick = function() {
+      modal.style.display = "flex";
+      modalImg.src = this.src;
+    }
+  }
+
+  span.onclick = function() {
+    modal.style.display = "none";
+  }
+
+  modal.onclick = function(event) {
+    if (event.target == modal) {
+      modal.style.display = "none";
+    }
+  }
+</script>
+
+</body>
+</html>

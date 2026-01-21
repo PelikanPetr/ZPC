@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Projekt: Finální Iterace 4</title>
+<style>
+  /* Základní styly */
+  * { margin: 0; padding: 0; box-sizing: border-box; font-family: Arial, sans-serif; }
+  body { background: linear-gradient(to bottom, #0a0f2c, #0047ab); color: white; min-height: 100vh; display: flex; flex-direction: column; }
+  header { background: #1a1040; display: flex; justify-content: space-between; align-items: center; padding: 15px 30px; font-size: 18px; }
+  header .logo { font-weight: bold; color: #ff4669; }
+  header nav a { color: white; text-decoration: none; margin-left: 20px; transition: color 0.3s ease; }
+  header nav a:hover { color: #ff4669; }
+  
+  main { flex: 1; display: flex; flex-direction: column; align-items: center; padding: 40px 20px; gap: 30px; }
+
+  .card { position: relative; width: 100%; max-width: 1200px; padding: 20px; overflow: auto; color: #dddddd; }
+  
+  .card h1 { color: white; text-align: center; font-size: 38px; font-weight: 900; margin-bottom: 25px; letter-spacing: 1px; }
+  .card h2 { color: white; text-align: left; font-size: 28px; font-weight: 700; margin-top: 30px; margin-bottom: 20px; border-bottom: 2px solid #ff4669; padding-bottom: 10px; }
+  .card h3 { color: #dddddd; font-size: 20px; font-weight: 700; margin-top: 20px; margin-bottom: 10px; }
+  .card p { text-align: left; line-height: 1.7; font-size: 18px; color: #c5c5c5; margin-bottom: 15px; }
+  .card ul { list-style: none; padding-left: 20px; }
+  .card li { padding-left: 25px; position: relative; margin-bottom: 10px; font-size: 18px; color: #c5c5c5; }
+  .card li::before { content: '■'; position: absolute; left: 0; top: 0; color: #ff4669; font-size: 14px; }
+
+  .card-close-button { position: absolute; top: 0px; right: 0px; color: #ff4669; font-size: 40px; font-weight: bold; text-decoration: none; transition: transform 0.2s ease; }
+  .card-close-button:hover { color: white; transform: scale(1.1); }
+
+  /* Grid layout */
+  .project-section { display: flex; flex-wrap: wrap; align-items: flex-start; margin-top: 20px; margin-bottom: 40px; gap: 30px; }
+  .project-section .text-block { flex: 1; min-width: 300px; }
+  .project-section .image-block { flex: 1; min-width: 300px; }
+  
+  .project-section.align-left .text-block { order: 1; }
+  .project-section.align-left .image-block { order: 2; }
+  .project-section.align-right .text-block { order: 2; }
+  .project-section.align-right .image-block { order: 1; }
+
+  img, video { width: 100%; border-radius: 8px; box-shadow: 0 4px 10px rgba(0,0,0,0.3); }
+  
+  /* SPOLEČNÉ STYLY PRO KLIKACÍ OBRÁZKY I VIDEA */
+  .clickable-image, .clickable-video { cursor: pointer; transition: transform 0.2s ease; }
+  .clickable-image:hover, .clickable-video:hover { transform: scale(1.02); }
+
+  .tech-specs { background: rgba(255, 255, 255, 0.05); padding: 15px; border-radius: 8px; border-left: 4px solid #ff4669; margin: 20px 0; }
+  .tech-specs strong { color: white; }
+
+  /* Modální okno */
+  .modal-overlay { display: none; position: fixed; z-index: 1000; left: 0; top: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.9); justify-content: center; align-items: center; }
+  .modal-content { max-width: 90%; max-height: 90%; object-fit: contain; }
+  /* Pro video v modálu chceme taky odstranit pointer events, aby nešlo pauzovat kliknutím */
+  video.modal-content { pointer-events: none; }
+  
+  .modal-close-button { position: absolute; top: 20px; right: 35px; color: #f1f1f1; font-size: 50px; font-weight: bold; cursor: pointer; z-index: 1001; }
+</style>
+</head>
+<body>
+  <header>
+    <div class="logo">⚙ ZPC 2025</div>
+    <nav>
+      <a href="O-mne.html">O mně</a>
+      <a href="Semestrální projekt.html">Semestrální projekt</a>
+    </nav>
+  </header>
+
+  <main>
+    <div class="card">
+      <a href="Semestrální projekt.html" class="card-close-button">&times;</a> 
+
+      <h1>⚙️ Iterace 4: Finální prototyp (Full Hand & HMI)</h1>
+      
+      <p style="text-align: center; font-size: 20px; margin-bottom: 40px;">
+        Závěrečná fáze projektu propojila poznatky z předchozích iterací do komplexního systému. 
+        Byl realizován <strong>plně motorizovaný model ruky s 5 stupni volnosti</strong>, autonomním řízením 
+        a dotykovým rozhraním.
+      </p>
+
+      <section class="project-section align-left">
+        <div class="text-block">
+          <h2>1. Finální mechanická konstrukce</h2>
+          <p>Základem systému je monolitický blok (vytištěný v jednom kuse, cca 8 hodin tisku), který nese pět nezávislých lineárních aktuátorů. Toto řešení zajišťuje maximální tuhost a přesné geometrické vazby mezi prsty.</p>
+          
+          <div class="tech-specs">
+            <p><strong>Klíčová vylepšení oproti Iteraci 3:</strong></p>
+            <ul>
+              <li><strong>T-Drážka:</strong> Vodící kolejnice jezdců byly přepracovány na profil "T". Tím se zcela eliminovala vůle a zasekávání (jamming) jezdce při zátěži.</li>
+              <li><strong>Svěrné páky:</strong> Nový design pák servomotorů obsahuje stahovací šroub. Ten fixuje páku k tisícihranu motoru svěrným spojem, což zamezilo prokluzování i při maximálním momentu.</li>
+              <li><strong>Prodloužený zdvih:</strong> Optimalizací rádiusu pák a délky kolejnic bylo dosaženo dostatečného navinutí lanka pro úplné zavření pěsti.</li>
+            </ul>
+          </div>
+        </div>
+        <div class="image-block">
+          <img src="desticka 4.jpg" alt="Detail lineárních aktuátorů s T-drážkou a červenými pákami" class="clickable-image">
+          <p style="font-size: 14px; text-align: center; margin-top: 5px; color: #888;">Detail svěrného spoje na pákách a vedení T-drážky.</p>
+        </div>
+      </section>
+
+      <section class="project-section align-right">
+        <div class="text-block">
+          <h2>2. Modularita a přepínatelné špičky</h2>
+          <p>Unikátním prvkem konstrukce je řešení koncovek prstů (fialové díly). Cílem bylo vytvořit jeden univerzální systém použitelný pro <strong>pravou i levou ruku</strong> bez nutnosti tisknout jiné díly.</p>
+          <p>Uvnitř špičky je integrován <strong>kulový čep s trubičkou</strong> (naklepnutý dovnitř). Tento mechanismus umožňuje překlopení úchytu lanka na opačnou stranu prstu. V krajních polohách se mechanismus mechanicky "zacvakne" do drážky, čímž se konfigurace zafixuje.</p>
+          <p><em>Textilní část:</em> Samotné prsty rukavice byly integrovány externí spoluprací (šití na míru), což zajistilo pevnou fixaci 3D tištěných dílů k látce.</p>
+        </div>
+        <div class="image-block">
+          <img src="rukavice final.jpg" alt="Spodní strana rukavice a fialové špičky" class="clickable-image">
+        </div>
+      </section>
+
+      <section class="project-section align-left">
+        <div class="text-block">
+          <h2>3. Elektronika a Power Management</h2>
+          <p>Vzhledem k odběru pěti digitálních serv (špičkově až 3,5 A na motor) bylo nutné opustit amatérská řešení napájení.</p>
+          <ul>
+            <li><strong>Řídicí jednotka:</strong> Arduino Giga R1 WiFi s nasazeným Giga Display Shieldem. Tato deska byla zvolena pro svůj vysoký výkon a přímou podporu dotykového rozhraní.</li>
+            <li><strong>Napájení:</strong> Použit průmyslový spínaný zdroj <strong>5,5 V / 18 A</strong>.</li>
+            <li><strong>Distribuce:</strong> Propojení motorů je realizováno přes komerční Servo Dock (hub pro 16 serv), který zvládá vysoké proudové zatížení bez nutnosti pájení kabeláže. Samotné Arduino je napájeno izolovaně přes USB.</li>
+          </ul>
+        </div>
+        <div class="image-block">
+          <img src="deska 4.jpg" alt="Celkový pohled na elektroniku a zdroj" class="clickable-image">
+        </div>
+      </section>
+
+      <section class="project-section-full">
+        <h2>4. HMI: Uživatelské rozhraní a módy</h2>
+        <p>Pro ovládání byl vyvinut grafický interface na dotykovém displeji. Uživatel (terapeut nebo pacient) může volit z předprogramovaných rehabilitačních sekvencí. Kalibrační hodnoty motorů jsou pevně definovány v kódu.</p>
+        
+        <div style="display: flex; gap: 20px; flex-wrap: wrap; justify-content: center; margin-top: 20px;">
+            <div style="flex: 1; min-width: 300px;">
+                <img src="display.jpg" alt="Menu na displeji" class="clickable-image">
+                <p style="text-align: center; margin-top: 5px;">Hlavní menu systému</p>
+            </div>
+            <div style="flex: 1; min-width: 300px;">
+                <h3>Implementované režimy:</h3>
+                <ul>
+                    <li><strong>VŠECHNY:</strong> Synchronní sevření celé ruky (úchop).</li>
+                    <li><strong>POSTUPNĚ:</strong> Sekvenční zavírání prstů.</li>
+                    <li><strong>POČÍTÁNÍ:</strong> Gesta ukazující čísla 1 až 5.</li>
+                    <li><strong>VLNA:</strong> Plynulý vlnivý pohyb prstů s časovým fázovým posunem.</li>
+                    <li><strong>STOP:</strong> Funkce Emergency Stop. Okamžitě zastaví pohyb a drží pozici. Po resetu vrací systém do nulové polohy.</li>
+                </ul>
+            </div>
+        </div>
+      </section>
+
+      <section class="project-section-full" style="margin-top: 40px;">
+        <h2>Videodokumentace funkčnosti</h2>
+        <div style="display: flex; flex-wrap: wrap; gap: 20px;">
+            
+            <div style="flex: 1; min-width: 300px;">
+                <h3 style="text-align: center;">Demonstrace změny stran (L/P)</h3>
+                <video src="pravaleva.mp4" class="clickable-video" autoplay loop muted playsinline style="width: 100%;"></video>
+            </div>
+
+            <div style="flex: 1; min-width: 300px;">
+                <h3 style="text-align: center;">Test logiky a displeje</h3>
+                <video src="obrazovka.mp4" class="clickable-video" autoplay loop muted playsinline style="width: 100%;"></video>
+            </div>
+            
+            <div style="flex: 1; min-width: 300px;">
+                <h3 style="text-align: center;">Finální test na ruce</h3>
+                <video src="final.mp4" class="clickable-video" autoplay loop muted playsinline style="width: 100%;"></video>
+            </div>
+        </div>
+      </section>
+
+      <section class="project-section-full" style="background: #1a1040; padding: 30px; border-radius: 10px; margin-top: 50px;">
+        <h2 style="text-align: center; border-bottom: none; color: #ff4669;">Zhodnocení semestrálního projektu</h2>
+        <p>
+          Cílem práce bylo navrhnout a realizovat funkční prototyp exoskeletní rukavice pro rehabilitaci. 
+          Skrze čtyři iterace se podařilo eliminovat zásadní mechanické problémy (vzpěr lanka, prokluz pák) 
+          a dosáhnout plně funkčního stavu. Výsledný model prokazuje, že pomocí dostupných technologií (3D tisk, Arduino) 
+          lze vytvořit robustní pomůcku s vysokou silou úchopu a variabilitou pro levou i pravou ruku.
+        </p>
+      </section>
+
+    </div> 
+  </main>
+
+  <div id="imageModal" class="modal-overlay">
+    <span class="modal-close-button">&times;</span>
+    <img class="modal-content" id="modalImageContent">
+  </div>
+
+  <div id="videoModal" class="modal-overlay">
+    <span class="modal-close-button video-close">&times;</span>
+    <video class="modal-content" id="modalVideoContent" autoplay loop muted playsinline></video>
+  </div>
+
+  <script>
+    // --- SKRIPT PRO OBRÁZKY ---
+    var modal = document.getElementById("imageModal");
+    var modalImg = document.getElementById("modalImageContent");
+    var span = document.getElementsByClassName("modal-close-button")[0];
+    var images = document.getElementsByClassName("clickable-image");
+
+    for (var i = 0; i < images.length; i++) {
+      images[i].onclick = function() {
+        modal.style.display = "flex";
+        modalImg.src = this.src;
+      }
+    }
+
+    span.onclick = function() { modal.style.display = "none"; }
+    modal.onclick = function(event) { if (event.target == modal) { modal.style.display = "none"; } }
+
+    // --- NOVÝ SKRIPT PRO VIDEA ---
+    var vModal = document.getElementById("videoModal");
+    var vModalContent = document.getElementById("modalVideoContent");
+    var vSpan = document.getElementsByClassName("video-close")[0];
+    var videos = document.getElementsByClassName("clickable-video");
+
+    for (var i = 0; i < videos.length; i++) {
+      videos[i].onclick = function() {
+        vModal.style.display = "flex";
+        vModalContent.src = this.src;
+        vModalContent.play(); // Ujistíme se, že se video spustí
+      }
+    }
+
+    vSpan.onclick = function() { 
+      vModal.style.display = "none"; 
+      vModalContent.pause(); // Zastavíme přehrávání na pozadí
+      vModalContent.src = ""; // Vyčistíme zdroj
+    }
+
+    vModal.onclick = function(event) { 
+      if (event.target == vModal) { 
+        vModal.style.display = "none"; 
+        vModalContent.pause();
+        vModalContent.src = "";
+      } 
+    }
+  </script>
+
+</body>
+</html>
