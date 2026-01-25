@@ -44,13 +44,34 @@
   .clickable-image, .clickable-video { cursor: pointer; transition: transform 0.2s ease; }
   .clickable-image:hover, .clickable-video:hover { transform: scale(1.02); }
 
+  /* --- STYL PRO YOUTUBE TLAČÍTKO --- */
+  .youtube-btn {
+    display: block;
+    width: 100%;
+    margin-top: 10px;
+    padding: 10px;
+    background-color: rgba(255, 0, 0, 0.15);
+    border: 1px solid #ff0000;
+    color: #ffcccc;
+    text-align: center;
+    text-decoration: none;
+    border-radius: 6px;
+    font-weight: bold;
+    font-size: 14px;
+    transition: all 0.3s ease;
+  }
+  .youtube-btn:hover {
+    background-color: #ff0000;
+    color: white;
+    box-shadow: 0 0 10px rgba(255, 0, 0, 0.5);
+  }
+
   .tech-specs { background: rgba(255, 255, 255, 0.05); padding: 15px; border-radius: 8px; border-left: 4px solid #ff4669; margin: 20px 0; }
   .tech-specs strong { color: white; }
 
   /* Modální okno */
   .modal-overlay { display: none; position: fixed; z-index: 1000; left: 0; top: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.9); justify-content: center; align-items: center; }
   .modal-content { max-width: 90%; max-height: 90%; object-fit: contain; }
-  /* Pro video v modálu chceme taky odstranit pointer events, aby nešlo pauzovat kliknutím */
   video.modal-content { pointer-events: none; }
   
   .modal-close-button { position: absolute; top: 20px; right: 35px; color: #f1f1f1; font-size: 50px; font-weight: bold; cursor: pointer; z-index: 1001; }
@@ -153,16 +174,19 @@
             <div style="flex: 1; min-width: 300px;">
                 <h3 style="text-align: center;">Demonstrace změny stran (L/P)</h3>
                 <video src="pravaleva.mp4" class="clickable-video" autoplay loop muted playsinline style="width: 100%;"></video>
+                <a href="https://youtu.be/D_juPUXwkmk" target="_blank" class="youtube-btn">▶ Přehrát na YouTube</a>
             </div>
 
             <div style="flex: 1; min-width: 300px;">
                 <h3 style="text-align: center;">Test logiky a displeje</h3>
                 <video src="obrazovka.mp4" class="clickable-video" autoplay loop muted playsinline style="width: 100%;"></video>
+                <a href="https://youtu.be/Fod2-11_k5Q" target="_blank" class="youtube-btn">▶ Přehrát na YouTube</a>
             </div>
             
             <div style="flex: 1; min-width: 300px;">
                 <h3 style="text-align: center;">Finální test na ruce</h3>
                 <video src="final.mp4" class="clickable-video" autoplay loop muted playsinline style="width: 100%;"></video>
+                <a href="https://youtu.be/uKaYTJ-IANY" target="_blank" class="youtube-btn">▶ Přehrát na YouTube</a>
             </div>
         </div>
       </section>
@@ -207,7 +231,7 @@
     span.onclick = function() { modal.style.display = "none"; }
     modal.onclick = function(event) { if (event.target == modal) { modal.style.display = "none"; } }
 
-    // --- NOVÝ SKRIPT PRO VIDEA ---
+    // --- SKRIPT PRO VIDEA (Zvětšování lokálního souboru) ---
     var vModal = document.getElementById("videoModal");
     var vModalContent = document.getElementById("modalVideoContent");
     var vSpan = document.getElementsByClassName("video-close")[0];
@@ -217,14 +241,14 @@
       videos[i].onclick = function() {
         vModal.style.display = "flex";
         vModalContent.src = this.src;
-        vModalContent.play(); // Ujistíme se, že se video spustí
+        vModalContent.play(); 
       }
     }
 
     vSpan.onclick = function() { 
       vModal.style.display = "none"; 
-      vModalContent.pause(); // Zastavíme přehrávání na pozadí
-      vModalContent.src = ""; // Vyčistíme zdroj
+      vModalContent.pause();
+      vModalContent.src = "";
     }
 
     vModal.onclick = function(event) { 
